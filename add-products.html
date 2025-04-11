@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Manage Products - Magma</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a2f3d; /* Theme color from previous example */
+            --primary-color-light: #2c4a5f;
+            --secondary-color: #e0e6eb;
+            --border-color: #dfe3e8;
+            --text-color-dark: #212b36;
+            --text-color-light: #555e6f;
+            --danger-color: #d9534f;
+            --success-color: #5cb85c;
+            --warning-color: #f0ad4e;
+            --body-bg: #f4f6f8;
+            --card-bg: #ffffff;
+            --input-bg: #ffffff;
+            --input-border: #c4cdd5;
+            --input-focus-border: var(--primary-color);
+            --button-radius: 6px;
+            --card-radius: 8px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+            touch-action: manipulation;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            max-width: 100%;
+            touch-action: pan-y;
+            background-color: var(--body-bg);
+            color: var(--text-color-dark);
+            line-height: 1.6;
+        }
+
+        .page-container {
+             padding-top: 80px; /* Increased space for fixed header */
+             padding-bottom: 40px;
+        }
+
+        /* Header Styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow-sm);
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1000;
+            height: 65px;
+        }
+
+        .header-left { display: flex; align-items: center; }
+        .back-btn {
+            background: none; border: none; font-size: 20px; margin-right: 15px;
+            color: var(--primary-color); cursor: pointer; padding: 5px;
+        }
+        .header-title { font-size: 20px; font-weight: 600; color: var(--text-color-dark); }
+        .header-right { display: flex; align-items: center; }
+        /* --- In-App Notification Bell --- */
+        .notification-bell {
+            position: relative; color: var(--text-color-light); cursor: pointer; margin-left: 20px;
+            font-size: 22px;
+        }
+        .notification-badge {
+            position: absolute; top: -4px; right: -6px; background-color: var(--danger-color);
+            color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 10px;
+            font-weight: bold; display: flex; justify-content: center; align-items: center;
+            border: 1px solid white;
+        }
+        .notification-panel {
+            display: none; /* Hidden by default */
+            position: absolute; top: 120%; right: 0; background-color: var(--card-bg);
+            border-radius: var(--card-radius); box-shadow: var(--shadow-md); border: 1px solid var(--border-color);
+            width: 300px; max-height: 400px; overflow-y: auto; z-index: 1100;
+        }
+        .notification-panel.visible { display: block; }
+        .notification-header { padding: 10px 15px; font-weight: 600; border-bottom: 1px solid var(--border-color); }
+        .notification-list { list-style: none; padding: 0; margin: 0; }
+        .notification-item { padding: 10px 15px; border-bottom: 1px solid var(--border-color); font-size: 13px; color: var(--text-color-light); }
+        .notification-item:last-child { border-bottom: none; }
+        .notification-item strong { color: var(--text-color-dark); }
+        .notification-item-time { font-size: 11px; color: #999; display: block; margin-top: 3px;}
+        .notification-empty { padding: 20px; text-align: center; color: #999; font-size: 14px; }
+        /* --- End Notification Bell --- */
+
+         /* Form Container */
+        .form-container, .list-container {
+            max-width: 700px; /* Slightly narrower */
+            margin: 25px auto;
+            padding: 0 15px;
+        }
+
+        /* Card Styling */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--card-radius);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 25px;
+            overflow: hidden; /* Important for consistent look */
+            border: 1px solid var(--border-color);
+        }
+        .card-header {
+            padding: 16px 20px; border-bottom: 1px solid var(--border-color);
+            font-size: 17px; font-weight: 600; color: var(--text-color-dark);
+            background-color: #fbfbfc; /* Slightly off-white header */
+        }
+        .card-body { padding: 25px 20px; }
+
+        /* Form Group Styling */
+        .form-group { margin-bottom: 25px; }
+        .form-group label {
+            display: block; font-size: 14px; font-weight: 500;
+            color: var(--text-color-dark); margin-bottom: 8px;
+        }
+        .form-group label .required { color: var(--danger-color); }
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="url"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%; padding: 12px 15px; border: 1px solid var(--input-border);
+            border-radius: var(--button-radius); font-size: 14px; background-color: var(--input-bg);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+         .form-group input:focus,
+         .form-group textarea:focus,
+         .form-group select:focus {
+             border-color: var(--input-focus-border); outline: none;
+             box-shadow: 0 0 0 2px rgba(26, 47, 61, 0.15); /* Focus shadow using theme color alpha */
+         }
+        .form-group textarea { min-height: 120px; resize: vertical; }
+        .form-group .input-hint { font-size: 12px; color: var(--text-color-light); margin-top: 6px; }
+
+        /* --- Image Upload Styling (No changes needed here) --- */
+        .image-upload-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 15px; }
+        .image-upload-slot {
+            position: relative; aspect-ratio: 1 / 1; border: 2px dashed var(--input-border);
+            border-radius: var(--button-radius); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; cursor: pointer;
+            background-color: #f9fafb; transition: border-color 0.2s ease, background-color 0.2s ease;
+            overflow: hidden; /* Hide overflowing content */
+        }
+        .image-upload-slot:hover { border-color: var(--primary-color); background-color: #f4f6f8; }
+        .image-upload-slot i { font-size: 24px; color: var(--text-color-light); margin-bottom: 8px; }
+        .image-upload-slot span { font-size: 12px; color: var(--text-color-light); text-align: center; padding: 0 5px;}
+        .image-upload-slot input[type="file"] { display: none; } /* Hide default input */
+        .image-upload-slot img.preview { /* Style for the preview image */
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: 1;
+        }
+        .image-upload-slot .remove-image { /* Style for remove button */
+            position: absolute; top: 5px; right: 5px; background-color: rgba(0,0,0,0.6);
+            color: white; border: none; border-radius: 50%; width: 20px; height: 20px;
+            font-size: 12px; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; z-index: 2; display: none; /* Hidden initially */
+        }
+        .image-upload-slot:hover .remove-image { display: flex; }
+        .image-upload-slot.has-image .remove-image { display: flex; }
+        .image-upload-slot.has-image i, .image-upload-slot.has-image span { display: none; } /* Hide placeholder text/icon */
+        /* --- End Image Upload Styling --- */
+
+
+        /* Price Fields Layout */
+        .price-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+        /* Status and Visibility */
+        .status-visibility { display: grid; grid-template-columns: 1fr; gap: 20px; }
+         @media (min-width: 600px) { .status-visibility { grid-template-columns: 1fr 1fr; } }
+
+
+        /* Submit Button */
+        .submit-button-container {
+            display: flex; justify-content: flex-end; margin-top: 30px; padding: 0 20px 20px; /* Add padding */
+        }
+        .submit-btn {
+            background-color: var(--primary-color); color: white; border: none;
+            padding: 12px 28px; font-size: 15px; font-weight: 600;
+            border-radius: var(--button-radius); cursor: pointer; transition: background-color 0.3s ease, box-shadow 0.2s ease;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .submit-btn i { font-size: 14px; }
+        .submit-btn:hover { background-color: var(--primary-color-light); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .submit-btn:disabled { background-color: #ccc; cursor: not-allowed; box-shadow: none; }
+
+
+        /* Status Message & Loading Indicator */
+        .status-indicator { margin: 20px 0; padding: 12px 15px; border-radius: var(--button-radius); font-size: 14px; text-align: center; display: none; }
+        .status-indicator.success { background-color: #dff0d8; color: #3c763d; border: 1px solid #d6e9c6; }
+        .status-indicator.error { background-color: #f2dede; color: #a94442; border: 1px solid #ebccd1; }
+        .status-indicator.loading { background-color: #d9edf7; color: #31708f; border: 1px solid #bce8f1; }
+        .status-indicator i { margin-right: 8px; }
+
+        /* --- User Product List Styles --- */
+        .user-products-list { margin-top: 30px; }
+        .user-products-list h3 {
+            font-size: 18px; font-weight: 600; margin-bottom: 15px;
+            padding: 0 20px; /* Consistent padding */
+            color: var(--text-color-dark);
+        }
+        .product-list-item {
+            display: flex; align-items: center; gap: 15px; padding: 15px 20px;
+            background-color: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: var(--button-radius); margin-bottom: 10px;
+            box-shadow: var(--shadow-sm);
+        }
+        .product-list-item-image {
+             width: 50px; height: 50px; border-radius: 4px;
+             object-fit: cover; flex-shrink: 0; background-color: #eee;
+        }
+        .product-list-item-details { flex-grow: 1; }
+        .product-list-item-title { font-weight: 500; font-size: 15px; margin-bottom: 3px; color: var(--text-color-dark); }
+        .product-list-item-price { font-size: 14px; color: var(--text-color-light); }
+        .product-list-item-status { font-size: 12px; padding: 2px 6px; border-radius: 4px; display: inline-block; text-transform: capitalize; }
+        .product-list-item-status.active { background-color: #dff0d8; color: #3c763d; }
+        .product-list-item-status.draft { background-color: #fcf8e3; color: #8a6d3b; }
+        .product-list-item-actions { display: flex; gap: 10px; flex-shrink: 0; }
+        .action-btn {
+            background: none; border: none; font-size: 16px; cursor: pointer;
+            padding: 5px; border-radius: 4px; transition: color 0.2s, background-color 0.2s;
+        }
+        .action-btn.edit { color: var(--primary-color); }
+        .action-btn.delete { color: var(--danger-color); }
+        .action-btn:hover { background-color: #eee; }
+        .product-list-empty { text-align: center; padding: 30px; color: var(--text-color-light); }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+             <!-- Link back to the store page (adjust href if needed) -->
+            <button class="back-btn" onclick="window.location.href='store.html';">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="header-title">Manage Products</div>
+        </div>
+        <div class="header-right">
+             <!-- Notification Bell -->
+             <div class="notification-bell" id="notificationBell">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge" id="notificationCount" style="display: none;">0</span>
+                <div class="notification-panel" id="notificationPanel">
+                    <div class="notification-header">Notifications</div>
+                    <ul class="notification-list" id="notificationList">
+                         <li class="notification-empty" id="notificationEmpty">No new notifications</li>
+                    </ul>
+                </div>
+             </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="page-container">
+        <div class="form-container">
+            <!-- Add/Edit Product Form -->
+            <form id="productForm">
+                 <!-- Hidden input for storing product ID during editing -->
+                 <input type="hidden" id="productId" name="productId">
+
+                <div class="card">
+                    <div class="card-header" id="formCardHeader">Add New Product</div>
+                    <div class="card-body">
+                        <!-- Status Message Area -->
+                         <div class="status-indicator" id="statusIndicator"></div>
+
+                        <div class="form-group">
+                            <label for="productTitle">Title <span class="required">*</span></label>
+                            <input type="text" id="productTitle" name="productTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productDescription">Description</label>
+                            <textarea id="productDescription" name="productDescription"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Media Card -->
+                <div class="card">
+                    <div class="card-header">Media (Upload up to 4 images)</div>
+                    <div class="card-body">
+                        <div class="image-upload-container" id="imageUploadContainer">
+                            <!-- Slots will be generated by JS -->
+                        </div>
+                        <p class="input-hint" style="margin-top: 15px;">Click or tap to upload images. First image will be the main display image.</p>
+                         <!-- Hidden input to store image URLs (kept for consistency, though main logic uses array) -->
+                        <input type="hidden" id="imageUrls" name="imageUrls">
+                    </div>
+                </div>
+
+                <!-- Pricing Card -->
+                <div class="card">
+                    <div class="card-header">Pricing</div>
+                    <div class="card-body">
+                        <div class="price-fields">
+                             <div class="form-group">
+                                 <label for="productPrice">Price (₱) <span class="required">*</span></label>
+                                 <input type="number" id="productPrice" name="productPrice" step="0.01" min="0" required>
+                             </div>
+                             <div class="form-group">
+                                 <label for="productComparePrice">Compare at price (₱)</label>
+                                 <input type="number" id="productComparePrice" name="productComparePrice" step="0.01" min="0">
+                                 <p class="input-hint">Optional. Must be higher than price.</p>
+                            </div>
+                        </div>
+                         <div class="form-group">
+                             <label for="productCost">Cost per item (₱)</label>
+                             <input type="number" id="productCost" name="productCost" step="0.01" min="0">
+                             <p class="input-hint">Optional. For your reference.</p>
+                         </div>
+                    </div>
+                </div>
+
+                 <!-- Inventory Card -->
+                <div class="card">
+                    <div class="card-header">Inventory</div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="productSku">SKU (Stock Keeping Unit)</label>
+                            <input type="text" id="productSku" name="productSku">
+                        </div>
+                        <div class="form-group">
+                            <label for="productQuantity">Quantity</label>
+                             <input type="number" id="productQuantity" name="productQuantity" step="1" min="0">
+                             <p class="input-hint">Leave blank to not track inventory.</p>
+                        </div>
+                         <div class="form-group">
+                             <input type="checkbox" id="allowOverselling" name="allowOverselling" style="margin-right: 5px;">
+                             <label for="allowOverselling" style="display: inline-block; font-weight: normal;">Allow overselling when out of stock</label>
+                         </div>
+                    </div>
+                </div>
+
+                <!-- Organization Card -->
+                <div class="card">
+                    <div class="card-header">Organization</div>
+                    <div class="card-body">
+                         <div class="form-group">
+                             <label for="productVendor">Vendor</label>
+                             <input type="text" id="productVendor" name="productVendor">
+                         </div>
+                         <div class="form-group">
+                            <label for="productType">Product type</label>
+                            <input type="text" id="productType" name="productType" placeholder="e.g., Meat, Snack, Drink">
+                         </div>
+                        <div class="form-group">
+                            <label for="productTags">Tags</label>
+                            <input type="text" id="productTags" name="productTags" placeholder="Comma-separated, e.g., siomai, frozen, pork">
+                        </div>
+                         <div class="form-group">
+                            <label for="productCategory">Product Category</label>
+                            <input type="text" id="productCategory" name="productCategory" placeholder="e.g., Food > Frozen Goods > Meat">
+                         </div>
+                    </div>
+                </div>
+
+                 <!-- Status Card -->
+                 <div class="card">
+                     <div class="card-header">Status</div>
+                     <div class="card-body">
+                         <div class="form-group">
+                             <label for="productStatus">Product status <span class="required">*</span></label>
+                             <select id="productStatus" name="productStatus" required>
+                                 <option value="active" selected>Active</option>
+                                 <option value="draft">Draft</option>
+                             </select>
+                             <p class="input-hint">Active products are visible in the store. Draft products are hidden.</p>
+                         </div>
+                     </div>
+                 </div>
+
+                <!-- Submit Button Area -->
+                <div class="submit-button-container">
+                    <button type="button" class="submit-btn cancel-btn" id="cancelEditButton" style="background-color: #aaa; margin-right: 10px; display: none;">Cancel</button>
+                    <button type="submit" class="submit-btn" id="saveButton">
+                        <i class="fas fa-save"></i> <span id="saveButtonText">Save Product</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+         <!-- User's Products List Area -->
+         <div class="list-container">
+            <div class="user-products-list card">
+                <div class="card-header">Your Products</div>
+                 <div class="card-body" style="padding: 0;"> <!-- Remove card body padding for list items -->
+                    <div id="userProductsListArea">
+                         <div class="product-list-empty" id="productListEmpty">Loading your products...</div>
+                     </div>
+                 </div>
+            </div>
+         </div>
+
+    </div> <!-- End page-container -->
+
+
+    <!-- Firebase SDK - Use Firestore, Auth, Storage -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script> <!-- Use Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <!-- Removed: <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script> -->
+
+    <script>
+        // --- Firebase Configuration ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyDwldURmtljNpORmpGRacwXriPmQZjF6j8",
+            authDomain: "daisy-n7g20a.firebaseapp.com",
+            // databaseURL: "https://daisy-n7g20a-default-rtdb.firebaseio.com", // Not needed for Firestore
+            projectId: "daisy-n7g20a",
+            storageBucket: "daisy-n7g20a.appspot.com",
+            messagingSenderId: "225362605902",
+            appId: "1:225362605902:web:d6672119cd68e7ffc3d01f"
+        };
+
+        // --- Initialize Firebase ---
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.firestore(); // Initialize Firestore
+        const auth = firebase.auth();      // Initialize Auth
+        const storage = firebase.storage(); // Initialize Storage
+
+        // --- Firestore Collection References ---
+        const productsCollectionRef = db.collection('kabarroph_products'); // TARGET COLLECTION
+        const userNotificationsCollectionRef = db.collection('user_notifications'); // Notifications in Firestore
+
+        // --- DOM Elements (remain the same) ---
+        const productForm = document.getElementById('productForm');
+        const saveButton = document.getElementById('saveButton');
+        const saveButtonText = document.getElementById('saveButtonText');
+        const statusIndicator = document.getElementById('statusIndicator');
+        const imageUploadContainer = document.getElementById('imageUploadContainer');
+        const imageInputs = [];
+        const imageUrlsInput = document.getElementById('imageUrls'); // Kept for potential future use, but array is primary
+        const userProductsListArea = document.getElementById('userProductsListArea');
+        const productListEmpty = document.getElementById('productListEmpty');
+        const productIdInput = document.getElementById('productId');
+        const formCardHeader = document.getElementById('formCardHeader');
+        const cancelEditButton = document.getElementById('cancelEditButton');
+        const notificationBell = document.getElementById('notificationBell');
+        const notificationCount = document.getElementById('notificationCount');
+        const notificationPanel = document.getElementById('notificationPanel');
+        const notificationList = document.getElementById('notificationList');
+        const notificationEmpty = document.getElementById('notificationEmpty');
+
+        let currentUser = null;
+        const MAX_IMAGES = 4;
+        let uploadedImageUrls = []; // Stores URLs (strings) or File objects
+        let isEditing = false;
+        let notificationListenerUnsubscribe = null; // To store the Firestore listener detach function
+
+
+        // --- Authentication State Change ---
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                console.log("User logged in:", user.uid);
+                currentUser = user;
+                initializePageForUser();
+            } else {
+                console.log("User logged out.");
+                currentUser = null;
+                // Optional: Redirect to login page or show a login prompt
+                // alert("Please log in to manage products.");
+                // window.location.href = '/login.html'; // Example redirect
+                userProductsListArea.innerHTML = '<div class="product-list-empty">Please log in to see your products.</div>';
+                productForm.reset();
+                disableForm();
+                // Detach notification listener if user logs out
+                if (notificationListenerUnsubscribe) {
+                    notificationListenerUnsubscribe();
+                    notificationListenerUnsubscribe = null;
+                    console.log("Notification listener detached.");
+                }
+                 // Clear notification UI
+                 updateNotificationUI([]);
+            }
+        });
+
+        // --- Function to run after user is logged in ---
+        function initializePageForUser() {
+            if (!currentUser) return;
+            enableForm();
+            createImageUploadSlots(); // Setup image UI
+            loadUserProducts();     // Load products from Firestore
+            listenForNotifications(); // Listen for notifications from Firestore
+        }
+
+        // --- Disable/Enable Form (no changes needed) ---
+        function disableForm() {
+            productForm.querySelectorAll('input, textarea, select, button').forEach(el => el.disabled = true);
+            imageUploadContainer.style.pointerEvents = 'none';
+            imageUploadContainer.style.opacity = '0.6';
+        }
+        function enableForm() {
+            productForm.querySelectorAll('input, textarea, select, button').forEach(el => el.disabled = false);
+            productIdInput.disabled = false; // Keep hidden fields usable if needed
+            imageUrlsInput.disabled = false; // Though we primarily use the array
+            imageUploadContainer.style.pointerEvents = 'auto';
+            imageUploadContainer.style.opacity = '1';
+            saveButton.disabled = false; // Enable save button initially
+        }
+
+
+        // --- Image Upload UI & Handling (No changes needed, Storage is separate) ---
+        function createImageUploadSlots() { /* ... Same as before ... */
+            imageUploadContainer.innerHTML = '';
+            imageInputs.length = 0;
+            uploadedImageUrls = new Array(MAX_IMAGES).fill(null);
+
+            for (let i = 0; i < MAX_IMAGES; i++) {
+                const slot = document.createElement('label');
+                slot.className = 'image-upload-slot';
+                slot.setAttribute('for', `imageUploadInput${i}`);
+
+                const icon = document.createElement('i'); icon.className = 'fas fa-cloud-upload-alt';
+                const text = document.createElement('span'); text.textContent = i === 0 ? 'Add main image' : `Add image ${i + 1}`;
+                const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/jpeg, image/png, image/webp, image/gif'; input.id = `imageUploadInput${i}`; input.dataset.index = i; input.style.display = 'none';
+                const preview = document.createElement('img'); preview.className = 'preview'; preview.style.display = 'none';
+                const removeBtn = document.createElement('button'); removeBtn.type = 'button'; removeBtn.className = 'remove-image'; removeBtn.innerHTML = '×'; removeBtn.style.display = 'none'; removeBtn.dataset.index = i;
+
+                slot.appendChild(icon); slot.appendChild(text); slot.appendChild(input); slot.appendChild(preview); slot.appendChild(removeBtn);
+                imageUploadContainer.appendChild(slot);
+                imageInputs.push(input);
+
+                input.addEventListener('change', handleFileSelect);
+                removeBtn.addEventListener('click', handleRemoveImage);
+            }
+             updateImageUrlsInput(); // Update hidden input initially
+        }
+
+        function handleFileSelect(event) { /* ... Same as before ... */
+            const input = event.target; const index = parseInt(input.dataset.index); const file = input.files[0];
+            const slot = input.closest('.image-upload-slot'); const preview = slot.querySelector('img.preview'); const removeBtn = slot.querySelector('.remove-image');
+            if (file) { const reader = new FileReader(); reader.onload = (e) => { preview.src = e.target.result; preview.style.display = 'block'; removeBtn.style.display = 'flex'; slot.classList.add('has-image'); uploadedImageUrls[index] = file; /* Store File */ }; reader.readAsDataURL(file); }
+        }
+
+        function handleRemoveImage(event) { /* ... Same as before ... */
+            event.preventDefault(); event.stopPropagation();
+            const button = event.target; const index = parseInt(button.dataset.index); const slot = button.closest('.image-upload-slot'); const input = slot.querySelector(`#imageUploadInput${index}`); const preview = slot.querySelector('img.preview');
+            if(input) input.value = ''; preview.src = '#'; preview.style.display = 'none'; button.style.display = 'none'; slot.classList.remove('has-image'); uploadedImageUrls[index] = null; updateImageUrlsInput();
+        }
+
+        function updateImageUrlsInput() { /* ... Same as before ... */
+             const validUrls = uploadedImageUrls.filter(item => typeof item === 'string' && item !== '');
+             imageUrlsInput.value = JSON.stringify(validUrls);
+        }
+        // --- End Image Handling ---
+
+
+        // --- Handle Form Submission (Add/Update Product to Firestore) ---
+        productForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            if (!currentUser) {
+                showStatus("Error: You must be logged in.", "error");
+                return;
+            }
+
+            setLoading(true, isEditing ? 'Updating...' : 'Saving...');
+
+            try {
+                 // 1. Upload Images to Firebase Storage (remains the same)
+                const currentUrlsOrFiles = [...uploadedImageUrls]; // Copy current state
+                const finalImageUrls = []; // To store final URLs after upload
+
+                for (let i = 0; i < currentUrlsOrFiles.length; i++) {
+                    const item = currentUrlsOrFiles[i];
+                    if (item instanceof File) { // Upload if it's a File object
+                         const file = item;
+                         const uniquePrefix = productIdInput.value || Date.now(); // Use product ID or timestamp
+                         const fileName = `product_${uniquePrefix}_${i}_${file.name}`;
+                         const filePath = `product_images/${currentUser.uid}/${fileName}`; // Simplified path
+                         const fileRef = storage.ref(filePath);
+
+                         showStatus(`Uploading image ${i + 1}...`, "loading", false);
+                         const snapshot = await fileRef.put(file);
+                         const downloadURL = await snapshot.ref.getDownloadURL();
+                         finalImageUrls.push(downloadURL); // Add the new URL
+                         console.log(`Image ${i+1} uploaded:`, downloadURL);
+                    } else if (typeof item === 'string' && item) {
+                         finalImageUrls.push(item); // Keep existing URL if it's a string
+                    }
+                }
+                console.log("Final image URLs:", finalImageUrls);
+
+
+                 // 2. Prepare Product Data for Firestore
+                const productData = {
+                    userId: currentUser.uid, // Associate product with user
+                    Handle: createHandle(document.getElementById('productTitle').value.trim()),
+                    Title: document.getElementById('productTitle').value.trim(),
+                    'Body (HTML)': document.getElementById('productDescription').value.trim(),
+                    Vendor: document.getElementById('productVendor').value.trim(),
+                    'Product Category': document.getElementById('productCategory').value.trim(),
+                    Type: document.getElementById('productType').value.trim(),
+                    // Store tags as an array for better querying in Firestore (optional, but recommended)
+                    Tags: document.getElementById('productTags').value.trim().split(',')
+                          .map(tag => tag.trim()).filter(tag => tag !== ''), // Creates an array
+                    Status: document.getElementById('productStatus').value,
+                    'Variant Price': parseFloat(document.getElementById('productPrice').value) || 0,
+                    'Variant Compare At Price': parseFloat(document.getElementById('productComparePrice').value) || null, // Use null if empty
+                    'Image Src': finalImageUrls[0] || '', // First image as main
+                    imageUrls: finalImageUrls, // Store all image URLs in an array
+                    'Variant SKU': document.getElementById('productSku').value.trim() || null, // Use null if empty
+                    'Variant Inventory Qty': document.getElementById('productQuantity').value !== '' ? parseInt(document.getElementById('productQuantity').value) : null, // Store null if empty
+                    allowOverselling: document.getElementById('allowOverselling').checked,
+                    'Cost per item': parseFloat(document.getElementById('productCost').value) || null, // Use null if empty
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp() // Firestore timestamp
+                };
+
+                // Basic Validation (remains the same)
+                if (!productData.Title || isNaN(productData['Variant Price'])) {
+                    throw new Error("Title and Price are required.");
+                }
+                 const comparePrice = productData['Variant Compare At Price'];
+                 if (comparePrice !== null && (isNaN(comparePrice) || comparePrice <= productData['Variant Price'])) {
+                     throw new Error("Compare at Price must be a valid number higher than the Price.");
+                 }
+
+                // 3. Save/Update Data in Firestore
+                let successMessage = '';
+                if (isEditing) {
+                    // --- Update Existing Product in Firestore ---
+                    const productId = productIdInput.value;
+                    if (!productId) throw new Error("Product ID missing for update.");
+                    showStatus("Updating product data...", "loading", false);
+                    const productDocRef = productsCollectionRef.doc(productId);
+                    await productDocRef.update(productData); // Use update
+                    successMessage = `Product "${productData.Title}" updated successfully!`;
+                } else {
+                    // --- Add New Product to Firestore ---
+                    showStatus("Adding product data...", "loading", false);
+                    productData.createdAt = firebase.firestore.FieldValue.serverTimestamp(); // Add createdAt timestamp for new products
+                    const newDocRef = await productsCollectionRef.add(productData); // Use add for auto-generated ID
+                    successMessage = `Product "${productData.Title}" added successfully!`;
+                    console.log("New product added with ID:", newDocRef.id);
+                     // --- Simulate Notification ---
+                     addNotification(currentUser.uid, `You added a new product: "${productData.Title}".`, newDocRef.id);
+                }
+
+                // 4. Reset Form and Show Success
+                resetForm();
+                showStatus(successMessage, "success");
+                loadUserProducts(); // Refresh the list
+
+            } catch (error) {
+                console.error("Error saving product to Firestore:", error);
+                showStatus(`Error: ${error.message || 'Failed to save product.'}`, "error");
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        // --- Cancel Edit (no changes needed) ---
+        cancelEditButton.addEventListener('click', () => { resetForm(); });
+
+        // --- Reset Form Function (no changes needed) ---
+        function resetForm() { /* ... Same as before ... */
+            productForm.reset();
+            productIdInput.value = ''; isEditing = false; formCardHeader.textContent = 'Add New Product'; saveButtonText.textContent = 'Save Product'; cancelEditButton.style.display = 'none'; statusIndicator.style.display = 'none';
+            uploadedImageUrls.fill(null);
+            document.querySelectorAll('.image-upload-slot').forEach(slot => { const preview = slot.querySelector('img.preview'); const removeBtn = slot.querySelector('.remove-image'); const input = slot.querySelector('input[type="file"]'); preview.src = '#'; preview.style.display = 'none'; removeBtn.style.display = 'none'; slot.classList.remove('has-image'); if(input) input.value = ''; });
+            updateImageUrlsInput();
+        }
+
+        // --- Load User Products from Firestore ---
+        async function loadUserProducts() {
+            if (!currentUser) return;
+
+            productListEmpty.textContent = "Loading your products...";
+            productListEmpty.style.display = 'block';
+            userProductsListArea.innerHTML = ''; // Clear previous list
+            userProductsListArea.appendChild(productListEmpty); // Add back empty/loading placeholder
+
+            try {
+                // Query Firestore for products matching the current user's ID
+                console.log("Querying Firestore for products with userId:", currentUser.uid);
+                const snapshot = await productsCollectionRef
+                                        .where('userId', '==', currentUser.uid)
+                                        // .orderBy('createdAt', 'desc') // Optional: Order by creation date
+                                        .get();
+
+                const productsData = []; // Array to hold product objects
+                if (!snapshot.empty) {
+                    snapshot.forEach(doc => {
+                        productsData.push({ id: doc.id, ...doc.data() }); // Get ID and data
+                    });
+                    console.log(`Found ${productsData.length} products for user.`);
+                    productListEmpty.style.display = 'none'; // Hide loading/empty message
+
+                    // Sort productsData if needed (e.g., by title)
+                    productsData.sort((a, b) => (a.Title || '').localeCompare(b.Title || ''));
+
+                    productsData.forEach(product => {
+                        const listItem = createProductListItem(product);
+                        userProductsListArea.appendChild(listItem);
+                    });
+                } else {
+                    console.log("No products found for this user in Firestore.");
+                    productListEmpty.textContent = "You haven't added any products yet.";
+                    productListEmpty.style.display = 'block';
+                }
+            } catch (error) {
+                console.error("Error loading user products from Firestore:", error);
+                productListEmpty.textContent = "Error loading products.";
+                productListEmpty.style.display = 'block';
+                showStatus("Error loading products. Check console.", "error");
+            }
+        }
+
+        // --- Create List Item Element (Consider displaying tags differently if array) ---
+        function createProductListItem(product) {
+            const item = document.createElement('div'); item.className = 'product-list-item'; item.dataset.id = product.id;
+            const img = document.createElement('img'); img.src = product['Image Src'] || (Array.isArray(product.imageUrls) && product.imageUrls[0]) || 'placeholder.svg'; img.alt = product.Title; img.className = 'product-list-item-image'; img.onerror = () => { img.src = 'placeholder.svg'; };
+            const details = document.createElement('div'); details.className = 'product-list-item-details';
+            const title = document.createElement('div'); title.className = 'product-list-item-title'; title.textContent = product.Title || 'No Title';
+            const price = document.createElement('div'); price.className = 'product-list-item-price'; price.textContent = formatPrice(product['Variant Price']);
+            const statusSpan = document.createElement('span'); statusSpan.className = `product-list-item-status ${product.Status || 'draft'}`; statusSpan.textContent = product.Status || 'draft';
+            details.appendChild(title); details.appendChild(price); details.appendChild(statusSpan);
+            // Optional: Display tags if stored as array
+            // if (Array.isArray(product.Tags) && product.Tags.length > 0) {
+            //     const tagsDiv = document.createElement('div'); tagsDiv.style.fontSize = '11px'; tagsDiv.style.marginTop = '3px';
+            //     tagsDiv.textContent = 'Tags: ' + product.Tags.join(', ');
+            //     details.appendChild(tagsDiv);
+            // }
+
+            const actions = document.createElement('div'); actions.className = 'product-list-item-actions';
+            const editBtn = document.createElement('button'); editBtn.className = 'action-btn edit'; editBtn.innerHTML = '<i class="fas fa-pencil-alt"></i>'; editBtn.title = 'Edit Product'; editBtn.onclick = () => loadProductForEdit(product.id);
+            const deleteBtn = document.createElement('button'); deleteBtn.className = 'action-btn delete'; deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>'; deleteBtn.title = 'Delete Product'; deleteBtn.onclick = () => deleteProduct(product.id, product.Title);
+            actions.appendChild(editBtn); actions.appendChild(deleteBtn);
+
+            item.appendChild(img); item.appendChild(details); item.appendChild(actions);
+            return item;
+        }
+
+        // --- Load Product Data into Form for Editing (from Firestore) ---
+        async function loadProductForEdit(productId) {
+            if (!currentUser) return;
+            resetForm();
+            showStatus("Loading product data...", "loading");
+
+            try {
+                const productDocRef = productsCollectionRef.doc(productId);
+                const docSnap = await productDocRef.get();
+
+                if (docSnap.exists()) {
+                    const product = { id: docSnap.id, ...docSnap.data() }; // Combine ID and data
+
+                    // Security check: ensure the product belongs to the current user
+                    if (product.userId !== currentUser.uid) {
+                         throw new Error("You don't have permission to edit this product.");
+                    }
+
+                    isEditing = true;
+                    productIdInput.value = productId;
+                    formCardHeader.textContent = 'Edit Product';
+                    saveButtonText.textContent = 'Update Product';
+                    cancelEditButton.style.display = 'inline-flex';
+
+                    // Populate form fields
+                    document.getElementById('productTitle').value = product.Title || '';
+                    document.getElementById('productDescription').value = product['Body (HTML)'] || '';
+                    document.getElementById('productPrice').value = product['Variant Price'] || '';
+                    document.getElementById('productComparePrice').value = product['Variant Compare At Price'] || ''; // Handles null ok
+                    document.getElementById('productCost').value = product['Cost per item'] || ''; // Handles null ok
+                    document.getElementById('productVendor').value = product.Vendor || '';
+                    document.getElementById('productType').value = product.Type || '';
+                    // Join tags array back into comma-separated string for the input field
+                    document.getElementById('productTags').value = Array.isArray(product.Tags) ? product.Tags.join(', ') : (product.Tags || '');
+                    document.getElementById('productCategory').value = product['Product Category'] || '';
+                    document.getElementById('productSku').value = product['Variant SKU'] || ''; // Handles null ok
+                    document.getElementById('productQuantity').value = product['Variant Inventory Qty'] ?? ''; // Handles null
+                    document.getElementById('allowOverselling').checked = product.allowOverselling || false;
+                    document.getElementById('productStatus').value = product.Status || 'draft';
+
+                    // Populate image previews and URLs (logic remains similar)
+                    uploadedImageUrls.fill(null);
+                    const imageUrls = product.imageUrls || [];
+                    imageUrls.forEach((url, index) => {
+                        if (index < MAX_IMAGES) {
+                            const slot = imageUploadContainer.children[index];
+                            if (slot) { // Check if slot exists
+                                const preview = slot.querySelector('img.preview');
+                                const removeBtn = slot.querySelector('.remove-image');
+                                preview.src = url; preview.style.display = 'block'; removeBtn.style.display = 'flex'; slot.classList.add('has-image');
+                                uploadedImageUrls[index] = url; // Store URL
+                            }
+                        }
+                    });
+                     updateImageUrlsInput();
+
+                    statusIndicator.style.display = 'none';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                } else {
+                    throw new Error("Product not found.");
+                }
+            } catch (error) {
+                console.error("Error loading product for edit from Firestore:", error);
+                showStatus(`Error: ${error.message}`, "error");
+                resetForm(); // Reset form if loading fails
+            }
+        }
+
+
+        // --- Delete Product from Firestore ---
+        async function deleteProduct(productId, productTitle) {
+            if (!currentUser || !productId) return;
+
+            if (!confirm(`Are you sure you want to delete the product "${productTitle || 'this product'}"? This cannot be undone.`)) {
+                return;
+            }
+
+            showStatus(`Deleting "${productTitle}"...`, "loading");
+
+            try {
+                const productDocRef = productsCollectionRef.doc(productId);
+                 // Optional: Get the product doc first to delete images from storage
+                 // const docSnap = await productDocRef.get();
+                 // if (docSnap.exists()) {
+                 //     const productData = docSnap.data();
+                 //     if (productData.userId === currentUser.uid) { // Verify ownership again
+                 //         await deleteProductImagesFromStorage(productData.imageUrls || []);
+                 //     } else { throw new Error("Permission denied for deletion."); }
+                 // }
+
+                // Delete product document from Firestore
+                await productDocRef.delete();
+                console.log(`Product ${productId} deleted from Firestore.`);
+
+                showStatus(`Product "${productTitle}" deleted successfully.`, "success");
+
+                // Delete associated notifications from Firestore
+                await deleteProductNotifications(productId);
+
+                loadUserProducts(); // Refresh the list
+
+            } catch (error) {
+                console.error("Error deleting product from Firestore:", error);
+                showStatus(`Error deleting product: ${error.message}`, "error");
+            } finally {
+                // setLoading(false); // Already handled by showStatus
+            }
+        }
+
+         // --- Helper to Delete Product Images from Storage ---
+         async function deleteProductImagesFromStorage(imageUrls) {
+             if (!Array.isArray(imageUrls) || imageUrls.length === 0) return;
+             console.log("Attempting to delete storage images:", imageUrls);
+             const deletePromises = imageUrls.map(url => {
+                 try {
+                     // Only attempt to delete if it's a valid Firebase Storage URL
+                     if (url && url.includes('firebasestorage.googleapis.com')) {
+                         return storage.refFromURL(url).delete();
+                     }
+                 } catch (e) {
+                     console.warn(`Could not get reference for URL ${url}:`, e);
+                     return Promise.resolve(); // Don't block other deletions
+                 }
+                 return Promise.resolve(); // Ignore non-storage URLs
+             });
+             try {
+                 await Promise.all(deletePromises);
+                 console.log("Associated product images deleted from Storage.");
+             } catch (error) {
+                 console.error("Error deleting product images from Storage (some may have failed):", error);
+                 // Don't necessarily stop the product deletion process, but log the error.
+             }
+         }
+
+         // --- Helper to Delete Notifications for a Product ---
+         async function deleteProductNotifications(productId) {
+             if (!currentUser || !productId) return;
+             console.log(`Deleting notifications for product ${productId}`);
+             try {
+                const querySnapshot = await userNotificationsCollectionRef
+                    .where('userId', '==', currentUser.uid)
+                    .where('productId', '==', productId)
+                    .get();
+
+                if (!querySnapshot.empty) {
+                    const deletePromises = [];
+                    querySnapshot.forEach(doc => {
+                        deletePromises.push(doc.ref.delete());
+                    });
+                    await Promise.all(deletePromises);
+                    console.log(`Deleted ${deletePromises.length} notifications for product ${productId}.`);
+                }
+             } catch (error) {
+                 console.error(`Error deleting notifications for product ${productId}:`, error);
+             }
+         }
+
+
+        // --- Helper Functions (mostly unchanged) ---
+        function createHandle(title) { /* ... Same as before ... */
+             if (!title) return `product-${Date.now()}`;
+             return title.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
+        }
+        function formatPrice(price) { /* ... Same as before ... */
+             if (price === null || price === undefined || price === '') return '₱--.--'; const number = parseFloat(price); if (isNaN(number)) return '₱--.--'; return `₱${number.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        }
+        function setLoading(isLoading, message = 'Saving...') { /* ... Same as before ... */
+             saveButton.disabled = isLoading; if (isLoading) { saveButtonText.textContent = message; saveButton.querySelector('i').className = 'fas fa-spinner fa-spin'; } else { saveButtonText.textContent = isEditing ? 'Update Product' : 'Save Product'; saveButton.querySelector('i').className = 'fas fa-save'; }
+        }
+        function showStatus(message, type = "info", autoHide = true) { /* ... Same as before ... */
+             statusIndicator.textContent = message; statusIndicator.className = `status-indicator ${type}`; statusIndicator.style.display = 'block'; if (autoHide && (type === 'success' || type === 'error')) { setTimeout(() => { statusIndicator.style.display = 'none'; }, 4000); }
+        }
+
+         // --- Notification System (Using Firestore) ---
+         function listenForNotifications() {
+             if (!currentUser) return;
+             // Detach previous listener if exists
+             if (notificationListenerUnsubscribe) {
+                 notificationListenerUnsubscribe();
+                 console.log("Detached previous notification listener.");
+             }
+
+             console.log("Listening for Firestore notifications for user:", currentUser.uid);
+             const q = userNotificationsCollectionRef
+                         .where('userId', '==', currentUser.uid) // Filter by user ID
+                         .orderBy('timestamp', 'desc') // Order newest first
+                         .limit(10); // Get recent 10
+
+             // Attach the real-time listener
+             notificationListenerUnsubscribe = q.onSnapshot(
+                 (querySnapshot) => {
+                     const notifications = [];
+                     querySnapshot.forEach((doc) => {
+                         notifications.push({ id: doc.id, ...doc.data() });
+                     });
+                     console.log(`Received ${notifications.length} notifications from Firestore listener.`);
+                     updateNotificationUI(notifications);
+                 },
+                 (error) => {
+                     console.error("Error listening to Firestore notifications:", error);
+                     // Optionally show an error to the user
+                 }
+             );
+         }
+
+         function updateNotificationUI(notifications) { /* ... Same as before ... */
+            notificationList.innerHTML = ''; let unreadCount = 0; if (notifications.length === 0) { notificationEmpty.style.display = 'block'; notificationCount.style.display = 'none'; notificationCount.textContent = '0'; } else { notificationEmpty.style.display = 'none'; notifications.forEach(notif => { const item = document.createElement('li'); item.className = 'notification-item'; item.innerHTML = ` ${notif.message} <span class="notification-item-time">${formatTimestamp(notif.timestamp)}</span> `; if (!notif.read) { item.style.fontWeight = 'bold'; unreadCount++; } notificationList.appendChild(item); }); if (unreadCount > 0) { notificationCount.textContent = unreadCount > 9 ? '9+' : unreadCount.toString(); notificationCount.style.display = 'flex'; } else { notificationCount.style.display = 'none'; } }
+         }
+
+         // Add a new notification to Firestore
+         async function addNotification(userId, message, relatedProductId = null) {
+             if (!userId) return;
+             try {
+                 const newNotif = {
+                     userId: userId, // Store userId in the document
+                     message: message,
+                     read: false,
+                     timestamp: firebase.firestore.FieldValue.serverTimestamp(), // Firestore timestamp
+                 };
+                 if (relatedProductId) {
+                     newNotif.productId = relatedProductId; // Add relation if provided
+                 }
+                 const addedDoc = await userNotificationsCollectionRef.add(newNotif);
+                 console.log("Notification added to Firestore with ID:", addedDoc.id);
+             } catch (error) {
+                 console.error("Error adding notification to Firestore:", error);
+             }
+         }
+
+         // Format Firestore timestamp for display
+         function formatTimestamp(timestamp) {
+             if (!timestamp || typeof timestamp.toDate !== 'function') return ''; // Check if it's a Firestore Timestamp
+             try {
+                 const date = timestamp.toDate(); // Use Firestore's toDate() method
+                 return date.toLocaleString('en-PH', { dateStyle: 'short', timeStyle: 'short' }); // Example formatting
+             } catch (e) {
+                 console.warn("Error formatting timestamp:", e);
+                 return '';
+             }
+         }
+
+         // Toggle Notification Panel (No changes needed)
+         notificationBell.addEventListener('click', (e) => { /* ... Same as before ... */
+             e.stopPropagation(); notificationPanel.classList.toggle('visible'); /* Optional: markNotificationsAsRead(); */
+         });
+         document.addEventListener('click', (e) => { /* ... Same as before ... */
+             if (!notificationBell.contains(e.target) && !notificationPanel.contains(e.target)) { notificationPanel.classList.remove('visible'); }
+         });
+
+
+         // Initial form state
+         disableForm(); // Start disabled until user is confirmed
+
+    </script>
+
+</body>
+</html>
