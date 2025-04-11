@@ -10,6 +10,7 @@
         :root {
             --primary-color: #1a2f3d;
             --primary-color-darker: #12212b;
+            --badge-color: #ff5252; /* Color for badges */
         }
 
         * {
@@ -39,7 +40,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 15px; /* Adjusted padding slightly for logo */
+            padding: 10px 15px;
             background-color: #fff;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: fixed;
@@ -58,360 +59,157 @@
 
         /* Back Button / Logo Container Style */
         .back-btn {
-            background: none;
-            border: none;
-            margin-right: 15px; /* Space between logo and title */
-            color: var(--primary-color);
-            cursor: pointer;
-            padding: 0; /* Reset padding */
-            text-decoration: none;
-            display: flex; /* Use flex to center image if needed */
-            align-items: center;
-            justify-content: center;
-            width: 50px; /* Set container width */
-            height: 50px; /* Set container height */
+            background: none; border: none; margin-right: 15px; color: var(--primary-color);
+            cursor: pointer; padding: 0; text-decoration: none; display: flex;
+            align-items: center; justify-content: center; width: 50px; height: 50px;
         }
 
         .header-logo {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%; /* Makes it a circle */
-            object-fit: cover; /* Ensures image covers the area well */
-            display: block; /* Remove extra space below image */
+            width: 50px; height: 50px; border-radius: 50%; /* Circle */
+            object-fit: cover; display: block; background-color: #eee; /* Fallback bg */
         }
 
-        /* Optional: Hover effect for logo */
-         .back-btn:hover {
-            opacity: 0.8; /* Slight fade on hover */
-         }
+        .back-btn:hover { opacity: 0.8; }
 
         .header-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #212b36;
+            font-size: 18px; font-weight: 600; color: #212b36;
         }
 
         .header-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
+            display: flex; align-items: center; gap: 25px; /* Increased gap slightly */
         }
 
         .header-icon {
-             position: relative;
-             font-size: 22px;
-             color: #333;
-             cursor: pointer;
+             position: relative; /* Needed for badge positioning */
+             font-size: 22px; color: #333; cursor: pointer;
+             padding: 5px; /* Add padding for easier tapping */
+             transition: transform 0.2s ease-in-out; /* Animation */
         }
-        .header-icon .fa-shopping-cart {
-            color: var(--primary-color);
-        }
+        /* Cart icon specific color */
+        .header-icon .fa-shopping-cart { color: var(--primary-color); }
 
-        .notification .notification-badge {
+        /* Cart icon hover/active animation */
+        .header-icon.cart-icon-container:hover {
+            transform: scale(1.1);
+        }
+         .header-icon.cart-icon-container:active {
+             transform: scale(1.05);
+         }
+
+
+        /* --- Badge Styling (Common for Notification & Cart) --- */
+        .badge {
             position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: #ff5252;
+            top: -3px; /* Adjusted position slightly */
+            right: -3px; /* Adjusted position slightly */
+            background-color: var(--badge-color);
             color: white;
             border-radius: 50%;
             width: 18px;
             height: 18px;
-            display: flex;
+            display: flex; /* Use flex to center content */
             justify-content: center;
             align-items: center;
             font-size: 10px;
             font-weight: bold;
+            line-height: 1; /* Ensure text fits vertically */
+            border: 1px solid white; /* Optional border */
+            pointer-events: none; /* Prevent badge from interfering with clicks */
         }
+        /* Hide badges by default */
+        .notification-badge, .cart-badge {
+            display: none;
+        }
+        /* Show badge if it has content (will be controlled by JS) */
+        .badge.visible {
+            display: flex;
+        }
+        /* --- End Badge Styling --- */
+
 
         /* Search Bar */
-        .search-container {
-            padding: 15px;
-            background-color: #fff;
-            margin-bottom: 10px;
+        .search-container { /* ... styles remain the same ... */
+            padding: 15px; background-color: #fff; margin-bottom: 10px;
         }
-
-        .search-bar {
-            display: flex;
-            align-items: center;
-            background-color: #f1f3f4;
-            border-radius: 25px;
-            padding: 8px 15px;
+        .search-bar { /* ... styles remain the same ... */
+            display: flex; align-items: center; background-color: #f1f3f4; border-radius: 25px; padding: 8px 15px;
         }
-
-        .search-bar i {
-            color: #5f6368;
-            margin-right: 10px;
-        }
-
-        .search-bar input {
-            flex: 1;
-            border: none;
-            background: transparent;
-            outline: none;
-            font-size: 14px;
-        }
-        .search-bar input:focus {
-             box-shadow: 0 0 0 1px var(--primary-color);
-        }
+        .search-bar i { color: #5f6368; margin-right: 10px; }
+        .search-bar input { flex: 1; border: none; background: transparent; outline: none; font-size: 14px; }
+        .search-bar input:focus { box-shadow: 0 0 0 1px var(--primary-color); }
 
         /* Categories */
-        .categories {
-            display: flex;
-            overflow-x: auto;
-            padding: 10px 15px;
-            background-color: #fff;
-            margin-bottom: 15px;
-            scrollbar-width: none; /* Firefox */
+        .categories { /* ... styles remain the same ... */
+            display: flex; overflow-x: auto; padding: 10px 15px; background-color: #fff; margin-bottom: 15px; scrollbar-width: none;
         }
+        .categories::-webkit-scrollbar { display: none; }
+        .category { /* ... styles remain the same ... */
+            flex: 0 0 auto; padding: 8px 15px; margin-right: 10px; background-color: #f1f3f4; border-radius: 20px; font-size: 13px; white-space: nowrap; cursor: pointer; transition: background-color 0.3s, color 0.3s; border: 1px solid transparent;
+        }
+        .category.active { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
 
-        .categories::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera */
+        /* Products Grid & Card */
+        .products-container { padding: 10px; }
+        .products-grid { /* ... styles remain the same ... */
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 5px; align-items: stretch;
         }
+        .product-card { /* ... styles remain the same ... */
+            background-color: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; height: 100%;
+        }
+        .product-card:active { transform: scale(0.98); }
+        .product-image { /* ... styles remain the same ... */
+            width: 100%; height: 150px; overflow: hidden; position: relative; background-color: #eee; flex-shrink: 0;
+        }
+        .product-image img { width: 100%; height: 100%; object-fit: cover; }
+        .discount-badge { /* ... styles remain the same ... */
+            position: absolute; top: 10px; right: 10px; background-color: var(--badge-color); color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;
+        }
+        .product-details { /* ... styles remain the same ... */
+            padding: 12px; display: flex; flex-direction: column; flex-grow: 1;
+        }
+        .product-title { /* ... styles remain the same ... */
+            font-size: 14px; font-weight: 600; margin-bottom: 5px; color: #333; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 42px; line-height: 1.5;
+        }
+        .product-vendor { /* ... styles remain the same ... */
+            font-size: 12px; color: #666; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .product-price { /* ... styles remain the same ... */
+            display: flex; align-items: center; margin-bottom: 8px;
+        }
+        .current-price { font-size: 16px; font-weight: 700; color: #333; }
+        .original-price { font-size: 12px; color: #999; text-decoration: line-through; margin-left: 8px; }
+        .product-tags { /* ... styles remain the same ... */
+            display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; height: 22px; overflow: hidden; margin-bottom: 10px;
+        }
+        .product-tag { background-color: #f1f3f4; padding: 2px 8px; border-radius: 10px; font-size: 10px; color: #666; }
+        .add-to-cart { /* ... styles remain the same ... */
+            background-color: var(--primary-color); color: white; border: none; border-radius: 5px; padding: 8px 0; width: 100%; font-size: 13px; font-weight: 500; cursor: pointer; transition: background-color 0.3s; margin-top: auto;
+        }
+        .add-to-cart:active, .add-to-cart:hover { background-color: var(--primary-color-darker); }
 
-        .category {
-            flex: 0 0 auto;
-            padding: 8px 15px;
-            margin-right: 10px;
-            background-color: #f1f3f4;
-            border-radius: 20px;
-            font-size: 13px;
-            white-space: nowrap;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-            border: 1px solid transparent;
+        /* Loading, Error, Empty States */
+        .loading { /* ... styles remain the same ... */
+            display: flex; justify-content: center; align-items: center; height: 200px; width: 100%;
         }
+        .loading-spinner { /* ... styles remain the same ... */
+            border: 4px solid rgba(0, 0, 0, 0.1); border-radius: 50%; border-top: 4px solid var(--primary-color); width: 40px; height: 40px; animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .error-message { /* ... styles remain the same ... */
+            text-align: center; padding: 20px; color: var(--badge-color); font-weight: bold;
+        }
+        .empty-state { /* ... styles remain the same ... */
+            display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; text-align: center; min-height: 200px;
+        }
+        .empty-state i { font-size: 50px; color: #ccc; margin-bottom: 15px; }
+        .empty-state h3 { font-size: 18px; color: #333; margin-bottom: 10px; }
+        .empty-state p { font-size: 14px; color: #666; margin-bottom: 20px; }
 
-        .category.active {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
+        /* FAB */
+        .fab { /* ... styles remain the same ... */
+            position: fixed; bottom: 35px; right: 20px; width: 55px; height: 55px; background-color: var(--primary-color); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; text-decoration: none; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); z-index: 999; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s;
         }
-
-        /* Products Grid */
-        .products-container {
-            padding: 10px;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            padding: 0 5px;
-            align-items: stretch;
-        }
-
-        /* Uniform Card Size */
-        .product-card {
-            background-color: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .product-card:active {
-            transform: scale(0.98);
-        }
-
-        .product-image {
-            width: 100%;
-            height: 150px;
-            overflow: hidden;
-            position: relative;
-            background-color: #eee;
-            flex-shrink: 0;
-        }
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .discount-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #ff5252;
-            color: white;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .product-details {
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .product-title {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: #333;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            height: 42px;
-            line-height: 1.5;
-        }
-
-        .product-vendor {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .product-price {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .current-price {
-            font-size: 16px;
-            font-weight: 700;
-            color: #333;
-        }
-
-        .original-price {
-            font-size: 12px;
-            color: #999;
-            text-decoration: line-through;
-            margin-left: 8px;
-        }
-
-        .product-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 5px;
-            height: 22px;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-
-        .product-tag {
-            background-color: #f1f3f4;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 10px;
-            color: #666;
-        }
-
-        .add-to-cart {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 8px 0;
-            width: 100%;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-top: auto;
-        }
-
-        .add-to-cart:active, .add-to-cart:hover {
-            background-color: var(--primary-color-darker);
-        }
-
-        /* Loading State */
-        .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 200px;
-            width: 100%;
-        }
-
-        .loading-spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-radius: 50%;
-            border-top: 4px solid var(--primary-color);
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Error State */
-        .error-message {
-            text-align: center;
-            padding: 20px;
-            color: #ff5252;
-            font-weight: bold; /* Make error more visible */
-        }
-
-        /* Empty State */
-        .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-            text-align: center;
-            min-height: 200px;
-        }
-
-        .empty-state i {
-            font-size: 50px;
-            color: #ccc;
-            margin-bottom: 15px;
-        }
-
-        .empty-state h3 {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .empty-state p {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        /* Floating Action Button (FAB) */
-        .fab {
-            position: fixed;
-            bottom: 35px;
-            right: 20px;
-            width: 55px;
-            height: 55px;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-            text-decoration: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            z-index: 999;
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s;
-        }
-
-        .fab:hover {
-             background-color: var(--primary-color-darker);
-             transform: scale(1.05);
-             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-        }
+        .fab:hover { background-color: var(--primary-color-darker); transform: scale(1.05); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3); }
 
     </style>
     <script>
@@ -428,17 +226,15 @@
 
         // Prevent zoom scripts (Keep as is)
         document.addEventListener('DOMContentLoaded', function() {
-            document.addEventListener('touchstart', function(event) {
+            document.addEventListener('touchstart', function(event) { /* ... same ... */
                 if (event.touches.length > 1) { event.preventDefault(); }
             }, { passive: false });
-            document.addEventListener('touchmove', function(event) {
+            document.addEventListener('touchmove', function(event) { /* ... same ... */
                 if (event.touches.length > 1) { event.preventDefault(); }
             }, { passive: false });
             let lastTouchEnd = 0;
-            document.addEventListener('touchend', function(event) {
-                const now = Date.now();
-                if (now - lastTouchEnd <= 300) { event.preventDefault(); }
-                lastTouchEnd = now;
+            document.addEventListener('touchend', function(event) { /* ... same ... */
+                const now = Date.now(); if (now - lastTouchEnd <= 300) { event.preventDefault(); } lastTouchEnd = now;
             }, { passive: false });
 
             // Initialize Firebase and Start Logic AFTER DOM is ready
@@ -447,8 +243,8 @@
     </script>
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script> <!-- Added Auth SDK -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script> <!-- Added Firestore SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
 </head>
 <body>
@@ -456,18 +252,24 @@
     <div class="header">
         <div class="header-left">
             <a href="home.html" class="back-btn">
-                 <!-- **** Logo path **** -->
-                <img src="assets/images/logo/logo.png" alt="Logo" class="header-logo" onerror="this.style.display='none'; console.error('Logo image not found at assets/images/logo/logo.png')"> <!-- Added onerror for debugging -->
+                 <!-- **** Unsplash Placeholder Logo **** -->
+                <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=50&h=50&fit=crop&q=80" alt="Logo" class="header-logo"
+                     onerror="this.style.backgroundColor='#ddd'; console.error('Logo image failed to load')">
             </a>
-            <div class="header-title">Kabarro</div>
+            <div class="header-title">Kabarro</div> <!-- Updated Title -->
         </div>
         <div class="header-right">
+            <!-- Notification Icon -->
             <div class="notification header-icon">
                 <i class="fas fa-bell"></i>
-                <div class="notification-badge">3</div> <!-- Static badge for now -->
+                 <!-- Notification badge (hidden by default, no static count) -->
+                <span class="badge notification-badge" id="notificationCountBadge"></span>
             </div>
-             <div class="header-icon">
+             <!-- Cart Icon -->
+             <div class="header-icon cart-icon-container" id="cartIconContainer">
                  <i class="fas fa-shopping-cart"></i>
+                 <!-- Cart Item Count Badge -->
+                 <span class="badge cart-badge" id="cartItemCountBadge">0</span>
              </div>
         </div>
     </div>
@@ -523,380 +325,222 @@
 
     <script>
         // --- Firebase Initialization and App Logic ---
-        let auth, db, productsCollectionRef; // Declare globally within the script
+        let auth, db, productsCollectionRef;
         let allProducts = [];
-        // let filteredProducts = []; // Not strictly needed if filtering is done on demand
         let currentCategory = 'all';
-        let listenersInitialized = false; // Track if listeners are set up
+        let listenersInitialized = false;
+        let cartItemCount = 0; // Simple in-memory cart counter
 
-        // Elements (moved outside initialize function for broader scope)
+        // --- DOM Elements ---
         const productsGrid = document.getElementById('productsGrid');
         const loadingIndicator = document.getElementById('loadingIndicator');
         const errorMessage = document.getElementById('errorMessage');
         const emptyState = document.getElementById('emptyState');
         const searchInput = document.getElementById('searchInput');
         const categories = document.querySelectorAll('.category');
+        const cartIconContainer = document.getElementById('cartIconContainer');
+        const cartItemCountBadge = document.getElementById('cartItemCountBadge');
+        // Note: Notification elements are present but not actively used in this script beyond hiding the badge
 
-
+        // --- Initialize Firebase and Auth ---
         function initializeFirebaseAndApp() {
-            // --- Initialize Firebase ---
             try {
                 if (!firebase.apps.length) {
-                    firebase.initializeApp(firebaseConfig); // Using your specific config
-                    console.log("Firebase initialized successfully with provided config.");
+                    firebase.initializeApp(firebaseConfig);
+                    console.log("Firebase initialized successfully.");
                 } else {
-                     firebase.app(); // Get default app if already initialized
+                     firebase.app();
                      console.log("Firebase already initialized.");
                 }
                 auth = firebase.auth();
                 db = firebase.firestore();
-                // Ensure collection name is correct for your Firestore database
                 productsCollectionRef = db.collection("kabarroph_products");
+
+                // --- Handle Authentication State ---
+                auth.onAuthStateChanged(user => {
+                    if (user) {
+                        console.log("Auth State Changed: User is signed in. UID:", user.uid, "Anonymous:", user.isAnonymous);
+                        // Fetch products if not already fetched and no error shown
+                        if (allProducts.length === 0 && errorMessage.style.display === 'none') {
+                            initializeProductFetching();
+                        } else {
+                            // Handle cases where user is already logged in and data might exist
+                            hideLoading(); // Ensure loading is hidden
+                            if (productsGrid.children.length > 0) {
+                                productsGrid.style.display = 'grid';
+                            } else if (errorMessage.style.display === 'none') {
+                                showEmptyState(); // Show empty if no products rendered
+                            }
+                        }
+                        // **TODO**: Load actual cart count from Firestore/Storage if implementing persistent cart
+                        updateCartBadge(); // Update cart badge on auth state change (will show 0 initially)
+                    } else {
+                        console.log("Auth State Changed: No user signed in. Attempting anonymous sign-in...");
+                        allProducts = []; productsGrid.innerHTML = ''; listenersInitialized = false; cartItemCount = 0; // Reset cart count on logout
+                        updateCartBadge(); // Hide cart badge
+                        signInAnonymously();
+                    }
+                });
+
             } catch (error) {
                 console.error("CRITICAL: Firebase initialization failed:", error);
                 showError("Application setup failed. Please check configuration and console.");
-                return; // Stop execution if Firebase doesn't initialize
             }
-
-            // --- Handle Authentication State ---
-            auth.onAuthStateChanged(user => {
-                if (user) {
-                    // User is signed in.
-                    console.log("Auth State Changed: User is signed in. Anonymous:", user.isAnonymous, "UID:", user.uid);
-                    // Fetch products ONLY if they haven't been fetched yet and we are not currently showing an error
-                    if (allProducts.length === 0 && errorMessage.style.display === 'none') {
-                        initializeProductFetching();
-                    } else if (allProducts.length > 0) {
-                         console.log("Products already available, skipping re-fetch on auth change.");
-                         // Ensure UI is correct state if needed (e.g., hide loading if it was stuck)
-                         hideLoading();
-                         if (productsGrid.children.length > 0) {
-                            productsGrid.style.display = 'grid';
-                         } else if (errorMessage.style.display === 'none'){ // Check if error isn't already shown
-                            showEmptyState();
-                         }
-                    } else {
-                        console.log("Auth state changed, but products are empty and error is shown or loading. No action.");
-                    }
-                } else {
-                    // User is signed out. Attempt anonymous sign-in.
-                    console.log("Auth State Changed: No user signed in. Attempting anonymous sign-in...");
-                    // Clear any old product data if user signs out
-                    allProducts = [];
-                    productsGrid.innerHTML = '';
-                    listenersInitialized = false; // Reset listeners flag
-                    signInAnonymously();
-                }
-            });
         }
 
-        function signInAnonymously() {
-            showLoading(); // Indicate activity during sign-in attempt
-
-            // Check if Anonymous Auth is enabled in your Firebase project console.
+        // --- Anonymous Sign-In ---
+        function signInAnonymously() { /* ... Same as before ... */
+            showLoading();
             auth.signInAnonymously()
-                .then(() => {
-                    // Sign-in successful. onAuthStateChanged will trigger next with the new user.
-                    console.log("Anonymous sign-in successful. Waiting for auth state change callback...");
-                    // Don't call initializeProductFetching here, let onAuthStateChanged handle it.
-                })
-                .catch((error) => {
-                    console.error("--- ANONYMOUS SIGN-IN FAILED ---");
-                    console.error("Error Code:", error.code);
-                    console.error("Error Message:", error.message);
-                    console.error("Full Error Object:", error);
-                    console.error("------------------------------------");
-                    console.error("Ensure 'Anonymous' Sign-in method is ENABLED in your Firebase Console (Authentication -> Sign-in method).");
-                    console.error("Verify the firebaseConfig object values are correct for your project.");
-                    console.error("Check Browser Developer Console (F12) Network tab for failed requests to Firebase Auth.");
-
-                    showError(`Authentication failed: ${error.message}. Check console and Firebase settings. (Code: ${error.code})`);
-                });
+                .then(() => { console.log("Anonymous sign-in successful. Waiting for auth state change callback..."); })
+                .catch((error) => { console.error("--- ANONYMOUS SIGN-IN FAILED ---", error); showError(`Authentication failed: ${error.message}. Check console and Firebase settings. (Code: ${error.code})`); });
         }
 
-        // --- Product Fetching and Rendering Logic ---
-        async function initializeProductFetching() {
-            if (!auth.currentUser) {
-                console.warn("Attempted to fetch products before user was authenticated. Waiting for auth.");
-                showLoading(); // Keep loading indicator on
-                return; // Exit and wait for auth state change
-            }
-
-            console.log("Fetching products for user:", auth.currentUser.uid);
-            showLoading(); // Ensure loading is shown before fetch starts
-            allProducts = await fetchProducts(); // Fetch products
-
-             if (errorMessage.style.display !== 'block') { // Only render if no critical error occurred during fetch
-                renderProducts(allProducts);
-                setupEventListeners(); // Setup listeners after first successful render
-             } else {
-                 hideLoading(); // Hide loading if an error was shown during fetch
-                 console.log("Skipping rendering and listeners due to fetch error.");
-             }
+        // --- Product Fetching ---
+        async function initializeProductFetching() { /* ... Same as before ... */
+            if (!auth.currentUser) { console.warn("Attempted to fetch products before user was authenticated."); showLoading(); return; }
+            console.log("Fetching products for user:", auth.currentUser.uid); showLoading();
+            allProducts = await fetchProducts();
+             if (errorMessage.style.display !== 'block') { renderProducts(allProducts); setupEventListeners(); }
+             else { hideLoading(); console.log("Skipping rendering and listeners due to fetch error."); }
         }
 
-        // --- Setup Event Listeners (Call after first successful render) ---
+        // --- Fetch Products from Firestore ---
+        async function fetchProducts() { /* ... Same as before ... */
+            if (!productsCollectionRef) { console.error("Firestore collection reference is not available."); showError("Database connection error."); return []; }
+            console.log(`Querying Firestore collection: ${productsCollectionRef.path}`);
+            try {
+                const snapshot = await productsCollectionRef.where("Status", "==", "active").get(); const productsArray = [];
+                if (snapshot.empty) { console.log("No active products found in the Firestore collection."); }
+                else { snapshot.forEach(doc => { productsArray.push({ id: doc.id, ...doc.data() }); }); console.log(`Fetched ${productsArray.length} active products.`); }
+                return productsArray;
+            } catch (error) { console.error("Error fetching products from Firestore:", error); if (error.code === 'permission-denied') { showError(`Firestore permission denied. Check Rules.`); console.error("Firestore Rules might be blocking read access."); } else { showError(`Failed to load products: ${error.message}.`); } return []; }
+        }
+
+
+        // --- Setup Event Listeners ---
         function setupEventListeners() {
-            if (listenersInitialized) {
-                 console.log("Listeners already initialized.");
-                 return; // Prevent adding listeners multiple times
-            }
-
+            if (listenersInitialized) { console.log("Listeners already initialized."); return; }
             console.log("Setting up event listeners...");
+
+            // Search Input
             searchInput.addEventListener('input', debouncedApplyFilters);
 
+            // Category Clicks
             categories.forEach(category => {
                 category.addEventListener('click', () => {
-                    if (category.classList.contains('active')) return; // Don't re-filter if already active
+                    if (category.classList.contains('active')) return;
                     categories.forEach(c => c.classList.remove('active'));
                     category.classList.add('active');
                     currentCategory = category.dataset.category;
-                    console.log("Category changed to:", currentCategory);
-                    applyFilters(); // Apply filters immediately on category change
+                    applyFilters();
                 });
             });
 
-            // Add to Cart Listener
+            // Add to Cart Clicks (on the grid)
             productsGrid.addEventListener('click', (event) => {
                  if (event.target.classList.contains('add-to-cart')) {
                      const button = event.target;
                      const productId = button.dataset.productId;
-                     if (!productId) {
-                         console.error("Add to Cart button clicked, but product ID is missing.");
-                         return;
-                     }
-                     console.log(`Add to cart clicked for product ID: ${productId}`);
+                     if (!productId) { console.error("Add to Cart button missing product ID."); return; }
 
-                     // --- Placeholder Add to Cart Logic ---
-                     button.textContent = 'Adding...';
-                     button.disabled = true;
-                     setTimeout(() => {
-                         console.log(`Product ${productId} added (simulated).`);
-                         button.textContent = 'Added!';
-                         setTimeout(() => {
-                            button.textContent = 'Add to Cart';
-                            button.disabled = false;
-                         }, 1500);
-                     }, 500);
-                     // --- End Placeholder ---
+                     handleAddToCart(productId, button); // Call specific handler
                  }
              });
-            listenersInitialized = true; // Mark listeners as initialized
-             console.log("Event listeners setup complete.");
-        }
 
-
-        // --- Fetch Products from Firestore ---
-        async function fetchProducts() {
-            if (!productsCollectionRef) {
-                 console.error("Firestore collection reference is not available.");
-                 showError("Database connection error. Cannot fetch products.");
-                 return [];
-            }
-            console.log(`Querying Firestore collection: ${productsCollectionRef.path}`);
-            try {
-                // Query Firestore for documents where Status is 'active'
-                // Ensure you have a Firestore index for 'Status' if querying large datasets
-                const snapshot = await productsCollectionRef.where("Status", "==", "active").get();
-                const productsArray = [];
-                if (snapshot.empty) {
-                    console.log("No active products found in the Firestore collection.");
-                 } else {
-                    snapshot.forEach(doc => {
-                        productsArray.push({ id: doc.id, ...doc.data() });
-                    });
-                    console.log(`Fetched ${productsArray.length} active products from Firestore.`);
-                 }
-                return productsArray;
-            } catch (error) {
-                console.error("Error fetching products from Firestore:", error);
-                // Check for permission errors specifically
-                if (error.code === 'permission-denied') {
-                     showError(`Firestore permission denied. Check your Firestore Security Rules.`);
-                     console.error("Firestore Rules might be blocking read access for anonymous users. Rules should allow read if request.auth != null or specifically for anonymous.");
-                } else {
-                    showError(`Failed to load products: ${error.message}.`);
-                }
-                return []; // Return empty array on error
-            }
-        }
-
-        // --- Render Products ---
-        function renderProducts(products) {
-            productsGrid.innerHTML = ''; // Clear previous products
-
-            if (!Array.isArray(products)) {
-                console.error("RenderProducts received non-array data:", products);
-                showEmptyState("Error", "Invalid product data received.");
-                return;
-            }
-
-            if (products.length === 0) {
-                console.log("No products to render (either empty fetch or filter result).");
-                // Determine if it was an empty fetch or empty filter result
-                const searchTerm = searchInput.value.trim();
-                if (currentCategory === 'all' && !searchTerm) {
-                    showEmptyState("No Products Available", "There are currently no active products in the store.");
-                } else {
-                    showEmptyState("No Products Found", "No products match your current filter or search.");
-                }
-                return;
-            }
-
-            console.log(`Rendering ${products.length} products...`);
-            // Sort products (optional, e.g., by Title)
-            products.sort((a, b) => (a.Title || a.name || '').localeCompare(b.Title || b.name || ''));
-
-            const fragment = document.createDocumentFragment(); // Use a fragment for performance
-
-            products.forEach(product => {
-                // --- Field Name Assumptions (Review these based on your Firestore data) ---
-                const currentPrice = product['Variant Price'] ?? product.price ?? null;
-                const comparePrice = product['Variant Compare At Price'] ?? product.compare_at_price ?? null;
-                const imageSrc = product['Image Src'] ?? (Array.isArray(product.imageUrls) && product.imageUrls[0]) ?? 'assets/images/placeholder.svg'; // Default placeholder path
-                const title = product.Title ?? product.name ?? 'Unnamed Product';
-                const vendor = product.Vendor ?? 'General Store';
-                let tags = product.Tags ?? [];
-                if (typeof tags === 'string') {
-                     tags = tags.split(',').map(tag => tag.trim()).filter(tag => tag);
-                } else if (!Array.isArray(tags)) {
-                    tags = [];
-                }
-                // --- End Field Name Assumptions ---
-
-                const discountPercentage = calculateDiscountPercentage(currentPrice, comparePrice);
-                const currentPriceFormatted = formatPrice(currentPrice);
-                const originalPriceFormatted = formatPrice(comparePrice);
-
-                const productCard = document.createElement('div');
-                productCard.className = 'product-card';
-                productCard.innerHTML = `
-                    <div class="product-image">
-                        <img src="${imageSrc}" alt="${title}" loading="lazy" onerror="this.onerror=null; this.src='assets/images/placeholder.svg'; console.warn('Image failed to load:', this.src)">
-                        ${discountPercentage ? `<div class="discount-badge">-${discountPercentage}%</div>` : ''}
-                    </div>
-                    <div class="product-details">
-                        <div class="product-title">${title}</div>
-                        <div class="product-vendor">${vendor}</div>
-                        <div class="product-price">
-                            <div class="current-price">${currentPriceFormatted}</div>
-                            ${originalPriceFormatted && discountPercentage ? `<div class="original-price">${originalPriceFormatted}</div>` : ''}
-                        </div>
-                        <div class="product-tags">
-                            ${tags.slice(0, 2).map(tag => `<div class="product-tag">${tag}</div>`).join('')}
-                        </div>
-                        <button class="add-to-cart" data-product-id="${product.id}">Add to Cart</button>
-                    </div>`;
-                fragment.appendChild(productCard); // Add to fragment
+             // Cart Icon Click for Navigation
+            cartIconContainer.addEventListener('click', () => {
+                console.log("Cart icon clicked, navigating to cart.html");
+                window.location.href = 'cart.html';
             });
 
-            productsGrid.appendChild(fragment); // Append fragment once
+            listenersInitialized = true;
+            console.log("Event listeners setup complete.");
+             updateCartBadge(); // Ensure badge is correct after listeners are added
+        }
 
-            hideLoading();
-            productsGrid.style.display = 'grid';
-            emptyState.style.display = 'none';
-            errorMessage.style.display = 'none';
+        // --- Add to Cart Handler ---
+        function handleAddToCart(productId, buttonElement) {
+            console.log(`Add to cart clicked for product ID: ${productId}`);
+
+            // --- Simple In-Memory Cart Logic ---
+            cartItemCount++; // Increment the counter
+            updateCartBadge(); // Update the visual badge
+            console.log("Cart count:", cartItemCount);
+            // ** IMPORTANT NOTE: This is a simulation. For a real cart, you would:
+            // 1. Get the current user's ID (auth.currentUser.uid).
+            // 2. Find or create the user's cart document in Firestore (e.g., in a 'carts' collection).
+            // 3. Add/update the product quantity within that Firestore document.
+            // 4. Update the cart badge based on the *actual* data from Firestore (potentially using a listener).
+            // --- End Note ---
+
+            // --- Visual Feedback for Button ---
+            buttonElement.textContent = 'Adding...';
+            buttonElement.disabled = true;
+            setTimeout(() => {
+                 buttonElement.textContent = 'Added!';
+                 // Briefly show "Added!" then revert
+                 setTimeout(() => {
+                    buttonElement.textContent = 'Add to Cart';
+                    buttonElement.disabled = false;
+                 }, 1000); // Show "Added!" for 1 second
+            }, 300); // Simulate adding delay
+        }
+
+        // --- Update Cart Badge UI ---
+        function updateCartBadge() {
+            if (!cartItemCountBadge) return; // Exit if element not found
+
+            if (cartItemCount > 0) {
+                cartItemCountBadge.textContent = cartItemCount > 9 ? '9+' : cartItemCount.toString();
+                cartItemCountBadge.classList.add('visible'); // Use class to show
+            } else {
+                cartItemCountBadge.textContent = '0'; // Reset text content
+                cartItemCountBadge.classList.remove('visible'); // Use class to hide
+            }
+        }
+
+
+        // --- Render Products ---
+        function renderProducts(products) { /* ... Same as before, ensure button has data-product-id ... */
+            productsGrid.innerHTML = '';
+            if (!Array.isArray(products)) { console.error("RenderProducts received non-array:", products); showEmptyState("Error", "Invalid product data."); return; }
+            if (products.length === 0) { const searchTerm = searchInput.value.trim(); if (currentCategory === 'all' && !searchTerm) { showEmptyState("No Products Available", "Store is currently empty."); } else { showEmptyState("No Products Found", "No products match filter/search."); } return; }
+            console.log(`Rendering ${products.length} products...`);
+            products.sort((a, b) => (a.Title || a.name || '').localeCompare(b.Title || b.name || ''));
+            const fragment = document.createDocumentFragment();
+            products.forEach(product => {
+                const currentPrice = product['Variant Price'] ?? product.price ?? null; const comparePrice = product['Variant Compare At Price'] ?? product.compare_at_price ?? null; const imageSrc = product['Image Src'] ?? (Array.isArray(product.imageUrls) && product.imageUrls[0]) ?? 'assets/images/placeholder.svg'; const title = product.Title ?? product.name ?? 'Unnamed Product'; const vendor = product.Vendor ?? 'General Store'; let tags = product.Tags ?? []; if (typeof tags === 'string') { tags = tags.split(',').map(tag => tag.trim()).filter(tag => tag); } else if (!Array.isArray(tags)) { tags = []; }
+                const discountPercentage = calculateDiscountPercentage(currentPrice, comparePrice); const currentPriceFormatted = formatPrice(currentPrice); const originalPriceFormatted = formatPrice(comparePrice);
+                const productCard = document.createElement('div'); productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image"> <img src="${imageSrc}" alt="${title}" loading="lazy" onerror="this.onerror=null; this.src='assets/images/placeholder.svg'; console.warn('Image failed:', this.src)"> ${discountPercentage ? `<div class="discount-badge">-${discountPercentage}%</div>` : ''} </div>
+                    <div class="product-details">
+                        <div class="product-title">${title}</div> <div class="product-vendor">${vendor}</div>
+                        <div class="product-price"> <div class="current-price">${currentPriceFormatted}</div> ${originalPriceFormatted && discountPercentage ? `<div class="original-price">${originalPriceFormatted}</div>` : ''} </div>
+                        <div class="product-tags"> ${tags.slice(0, 2).map(tag => `<div class="product-tag">${tag}</div>`).join('')} </div>
+                        <button class="add-to-cart" data-product-id="${product.id || ''}">Add to Cart</button>  </div>`; // Ensure product.id exists
+                fragment.appendChild(productCard);
+            });
+            productsGrid.appendChild(fragment);
+            hideLoading(); productsGrid.style.display = 'grid'; emptyState.style.display = 'none'; errorMessage.style.display = 'none';
             console.log("Rendering complete.");
         }
 
-        // --- Helper Functions ---
-        function formatPrice(price) {
-             if (price === null || price === undefined || price === '') return '';
-             const number = parseFloat(price);
-             if (isNaN(number)) return '';
-             return `₱${number.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-        }
-        function calculateDiscountPercentage(currentPrice, originalPrice) {
-            const current = parseFloat(currentPrice);
-            const original = parseFloat(originalPrice);
-            if (isNaN(current) || isNaN(original) || original <= 0 || original <= current) return null;
-            const discount = Math.round(((original - current) / original) * 100);
-            return discount > 0 ? discount : null;
-        }
+        // --- Helper & Utility Functions ---
+        function formatPrice(price) { /* ... Same as before ... */ if (price === null || price === undefined || price === '') return ''; const number = parseFloat(price); if (isNaN(number)) return ''; return `₱${number.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`; }
+        function calculateDiscountPercentage(currentPrice, originalPrice) { /* ... Same as before ... */ const current = parseFloat(currentPrice); const original = parseFloat(originalPrice); if (isNaN(current) || isNaN(original) || original <= 0 || original <= current) return null; const discount = Math.round(((original - current) / original) * 100); return discount > 0 ? discount : null; }
+        function filterProductsByCategory(products, category) { /* ... Same as before ... */ if (category === 'all') return products; const lowerCaseCategory = category.toLowerCase(); return products.filter(product => { const type = (product.Type ?? product.category ?? '').toLowerCase(); const productCategory = (product['Product Category'] ?? '').toLowerCase(); let tagsMatch = false; if (Array.isArray(product.Tags)) { tagsMatch = product.Tags.some(tag => tag.toLowerCase().includes(lowerCaseCategory)); } else if (typeof product.Tags === 'string') { tagsMatch = product.Tags.toLowerCase().includes(lowerCaseCategory); } return type.includes(lowerCaseCategory) || productCategory.includes(lowerCaseCategory) || tagsMatch; }); }
+        function filterProductsBySearch(products, searchTerm) { /* ... Same as before ... */ if (!searchTerm) return products; const lowerCaseSearchTerm = searchTerm.toLowerCase(); return products.filter(product => { const title = (product.Title ?? product.name ?? '').toLowerCase(); const vendor = (product.Vendor ?? '').toLowerCase(); const description = (product['Body (HTML)'] ?? product.description ?? '').toLowerCase(); const type = (product.Type ?? product.category ?? '').toLowerCase(); let tagsMatch = false; if (Array.isArray(product.Tags)) { tagsMatch = product.Tags.some(tag => tag.toLowerCase().includes(lowerCaseSearchTerm)); } else if (typeof product.Tags === 'string') { tagsMatch = product.Tags.toLowerCase().includes(lowerCaseSearchTerm); } return title.includes(lowerCaseSearchTerm) || vendor.includes(lowerCaseSearchTerm) || description.includes(lowerCaseSearchTerm) || type.includes(lowerCaseSearchTerm) || tagsMatch; }); }
+        function showLoading() { /* ... Same as before ... */ loadingIndicator.style.display = 'flex'; productsGrid.style.display = 'none'; errorMessage.style.display = 'none'; emptyState.style.display = 'none'; }
+        function hideLoading() { /* ... Same as before ... */ loadingIndicator.style.display = 'none'; }
+        function showError(message = "An error occurred.") { /* ... Same as before ... */ hideLoading(); errorMessage.textContent = message; errorMessage.style.display = 'block'; productsGrid.style.display = 'none'; emptyState.style.display = 'none'; console.error("Error displayed:", message); }
+        function showEmptyState(message = "No Products Found", subMessage = "There are currently no products matching your search or filter.") { /* ... Same as before ... */ hideLoading(); emptyState.querySelector('h3').textContent = message; emptyState.querySelector('p').textContent = subMessage; emptyState.style.display = 'flex'; productsGrid.style.display = 'none'; errorMessage.style.display = 'none'; }
+        let searchTimeout; function debouncedApplyFilters() { /* ... Same as before ... */ clearTimeout(searchTimeout); searchTimeout = setTimeout(applyFilters, 300); }
+        function applyFilters() { /* ... Same as before ... */ const searchTerm = searchInput.value.trim(); console.log(`Applying filters - Category: '${currentCategory}', Search: '${searchTerm}'`); showLoading(); setTimeout(() => { let filtered = filterProductsByCategory(allProducts, currentCategory); filtered = filterProductsBySearch(filtered, searchTerm); renderProducts(filtered); }, 10); }
 
-        // --- Filtering Functions ---
-        function filterProductsByCategory(products, category) {
-            if (category === 'all') return products;
-            const lowerCaseCategory = category.toLowerCase();
-            return products.filter(product => {
-                const type = (product.Type ?? product.category ?? '').toLowerCase();
-                const productCategory = (product['Product Category'] ?? '').toLowerCase();
-                let tagsMatch = false;
-                if (Array.isArray(product.Tags)) {
-                    tagsMatch = product.Tags.some(tag => tag.toLowerCase().includes(lowerCaseCategory));
-                } else if (typeof product.Tags === 'string') {
-                    tagsMatch = product.Tags.toLowerCase().includes(lowerCaseCategory);
-                }
-                return type.includes(lowerCaseCategory) || productCategory.includes(lowerCaseCategory) || tagsMatch;
-            });
-        }
-        function filterProductsBySearch(products, searchTerm) {
-            if (!searchTerm) return products;
-            const lowerCaseSearchTerm = searchTerm.toLowerCase();
-            return products.filter(product => {
-                const title = (product.Title ?? product.name ?? '').toLowerCase();
-                const vendor = (product.Vendor ?? '').toLowerCase();
-                const description = (product['Body (HTML)'] ?? product.description ?? '').toLowerCase();
-                const type = (product.Type ?? product.category ?? '').toLowerCase();
-                 let tagsMatch = false;
-                if (Array.isArray(product.Tags)) {
-                    tagsMatch = product.Tags.some(tag => tag.toLowerCase().includes(lowerCaseSearchTerm));
-                } else if (typeof product.Tags === 'string') {
-                    tagsMatch = product.Tags.toLowerCase().includes(lowerCaseSearchTerm);
-                }
-                // Check if any field contains the search term
-                return title.includes(lowerCaseSearchTerm) ||
-                       vendor.includes(lowerCaseSearchTerm) ||
-                       description.includes(lowerCaseSearchTerm) ||
-                       type.includes(lowerCaseSearchTerm) ||
-                       tagsMatch;
-            });
-        }
-
-        // --- UI State Functions ---
-        function showLoading() {
-            loadingIndicator.style.display = 'flex';
-            productsGrid.style.display = 'none';
-            errorMessage.style.display = 'none';
-            emptyState.style.display = 'none';
-        }
-        function hideLoading() {
-            loadingIndicator.style.display = 'none';
-        }
-        function showError(message = "An error occurred.") {
-            hideLoading();
-            errorMessage.textContent = message; // Set the error message text
-            errorMessage.style.display = 'block';
-            productsGrid.style.display = 'none';
-            emptyState.style.display = 'none';
-            console.error("Error displayed to user:", message); // Log error shown
-        }
-        function showEmptyState(message = "No Products Found", subMessage = "There are currently no products matching your search or filter.") {
-            hideLoading();
-            emptyState.querySelector('h3').textContent = message;
-            emptyState.querySelector('p').textContent = subMessage;
-            emptyState.style.display = 'flex';
-            productsGrid.style.display = 'none';
-            errorMessage.style.display = 'none';
-        }
-
-        // --- Debounce & Filter Application ---
-        let searchTimeout;
-        function debouncedApplyFilters() {
-             clearTimeout(searchTimeout);
-             searchTimeout = setTimeout(applyFilters, 300); // Wait 300ms after typing stops
-        }
-        function applyFilters() {
-            const searchTerm = searchInput.value.trim();
-            console.log(`Applying filters - Category: '${currentCategory}', Search: '${searchTerm}'`);
-            showLoading(); // Show loading briefly while filtering/re-rendering
-            // Use setTimeout to allow loading UI to update before potentially blocking filter logic
-            setTimeout(() => {
-                let filtered = filterProductsByCategory(allProducts, currentCategory);
-                filtered = filterProductsBySearch(filtered, searchTerm);
-                renderProducts(filtered); // Render the filtered results
-            }, 10);
-        }
+        // --- Initial Call ---
+        // initializeFirebaseAndApp(); // Called by DOMContentLoaded event listener
 
     </script>
 </body>
