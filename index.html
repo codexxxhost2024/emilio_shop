@@ -128,10 +128,10 @@
 
 
         /* Search Bar */
-        .search-container { /* ... styles remain the same ... */
+        .search-container {
             padding: 15px; background-color: #fff; margin-bottom: 10px;
         }
-        .search-bar { /* ... styles remain the same ... */
+        .search-bar {
             display: flex; align-items: center; background-color: #f1f3f4; border-radius: 25px; padding: 8px 15px;
         }
         .search-bar i { color: #5f6368; margin-right: 10px; }
@@ -139,66 +139,66 @@
         .search-bar input:focus { box-shadow: 0 0 0 1px var(--primary-color); }
 
         /* Categories */
-        .categories { /* ... styles remain the same ... */
+        .categories {
             display: flex; overflow-x: auto; padding: 10px 15px; background-color: #fff; margin-bottom: 15px; scrollbar-width: none;
         }
         .categories::-webkit-scrollbar { display: none; }
-        .category { /* ... styles remain the same ... */
+        .category {
             flex: 0 0 auto; padding: 8px 15px; margin-right: 10px; background-color: #f1f3f4; border-radius: 20px; font-size: 13px; white-space: nowrap; cursor: pointer; transition: background-color 0.3s, color 0.3s; border: 1px solid transparent;
         }
         .category.active { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
 
         /* Products Grid & Card */
         .products-container { padding: 10px; }
-        .products-grid { /* ... styles remain the same ... */
+        .products-grid {
             display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 5px; align-items: stretch;
         }
-        .product-card { /* ... styles remain the same ... */
+        .product-card {
             background-color: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; height: 100%;
         }
         .product-card:active { transform: scale(0.98); }
-        .product-image { /* ... styles remain the same ... */
+        .product-image {
             width: 100%; height: 150px; overflow: hidden; position: relative; background-color: #eee; flex-shrink: 0;
         }
         .product-image img { width: 100%; height: 100%; object-fit: cover; }
-        .discount-badge { /* ... styles remain the same ... */
+        .discount-badge {
             position: absolute; top: 10px; right: 10px; background-color: var(--badge-color); color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;
         }
-        .product-details { /* ... styles remain the same ... */
+        .product-details {
             padding: 12px; display: flex; flex-direction: column; flex-grow: 1;
         }
-        .product-title { /* ... styles remain the same ... */
+        .product-title {
             font-size: 14px; font-weight: 600; margin-bottom: 5px; color: #333; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 42px; line-height: 1.5;
         }
-        .product-vendor { /* ... styles remain the same ... */
+        .product-vendor {
             font-size: 12px; color: #666; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
-        .product-price { /* ... styles remain the same ... */
+        .product-price {
             display: flex; align-items: center; margin-bottom: 8px;
         }
         .current-price { font-size: 16px; font-weight: 700; color: #333; }
         .original-price { font-size: 12px; color: #999; text-decoration: line-through; margin-left: 8px; }
-        .product-tags { /* ... styles remain the same ... */
+        .product-tags {
             display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; height: 22px; overflow: hidden; margin-bottom: 10px;
         }
         .product-tag { background-color: #f1f3f4; padding: 2px 8px; border-radius: 10px; font-size: 10px; color: #666; }
-        .add-to-cart { /* ... styles remain the same ... */
+        .add-to-cart {
             background-color: var(--primary-color); color: white; border: none; border-radius: 5px; padding: 8px 0; width: 100%; font-size: 13px; font-weight: 500; cursor: pointer; transition: background-color 0.3s; margin-top: auto;
         }
         .add-to-cart:active, .add-to-cart:hover { background-color: var(--primary-color-darker); }
 
         /* Loading, Error, Empty States */
-        .loading { /* ... styles remain the same ... */
+        .loading {
             display: flex; justify-content: center; align-items: center; height: 200px; width: 100%;
         }
-        .loading-spinner { /* ... styles remain the same ... */
+        .loading-spinner {
             border: 4px solid rgba(0, 0, 0, 0.1); border-radius: 50%; border-top: 4px solid var(--primary-color); width: 40px; height: 40px; animation: spin 1s linear infinite;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .error-message { /* ... styles remain the same ... */
+        .error-message {
             text-align: center; padding: 20px; color: var(--badge-color); font-weight: bold;
         }
-        .empty-state { /* ... styles remain the same ... */
+        .empty-state {
             display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; text-align: center; min-height: 200px;
         }
         .empty-state i { font-size: 50px; color: #ccc; margin-bottom: 15px; }
@@ -206,34 +206,34 @@
         .empty-state p { font-size: 14px; color: #666; margin-bottom: 20px; }
 
         /* FAB */
-        .fab { /* ... styles remain the same ... */
+        .fab {
             position: fixed; bottom: 35px; right: 20px; width: 55px; height: 55px; background-color: var(--primary-color); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; text-decoration: none; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); z-index: 999; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s;
         }
         .fab:hover { background-color: var(--primary-color-darker); transform: scale(1.05); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3); }
 
     </style>
     <script>
-        // Firebase configuration (Using the specific config provided)
+        // Firebase configuration (Using the specific config provided by user)
         const firebaseConfig = {
           apiKey: "AIzaSyDwldURmtljNpORmpGRacwXriPmQZjF6j8",
           authDomain: "daisy-n7g20a.firebaseapp.com",
-          databaseURL: "https://daisy-n7g20a-default-rtdb.firebaseio.com", // Included as provided, though not used for Firestore
+          databaseURL: "https://daisy-n7g20a-default-rtdb.firebaseio.com",
           projectId: "daisy-n7g20a",
           storageBucket: "daisy-n7g20a.appspot.com",
           messagingSenderId: "225362605902",
           appId: "1:225362605902:web:d6672119cd68e7ffc3d01f"
         };
 
-        // Prevent zoom scripts (Keep as is)
+        // Prevent zoom scripts
         document.addEventListener('DOMContentLoaded', function() {
-            document.addEventListener('touchstart', function(event) { /* ... same ... */
+            document.addEventListener('touchstart', function(event) {
                 if (event.touches.length > 1) { event.preventDefault(); }
             }, { passive: false });
-            document.addEventListener('touchmove', function(event) { /* ... same ... */
+            document.addEventListener('touchmove', function(event) {
                 if (event.touches.length > 1) { event.preventDefault(); }
             }, { passive: false });
             let lastTouchEnd = 0;
-            document.addEventListener('touchend', function(event) { /* ... same ... */
+            document.addEventListener('touchend', function(event) {
                 const now = Date.now(); if (now - lastTouchEnd <= 300) { event.preventDefault(); } lastTouchEnd = now;
             }, { passive: false });
 
@@ -253,7 +253,9 @@
         <div class="header-left">
             <a href="home.html" class="back-btn">
                  <!-- **** Unsplash Placeholder Logo **** -->
-                <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=50&h=50&fit=crop&q=80" alt="Logo" class="header-logo"
+                 <!-- Using a direct link to a small, cropped Unsplash image -->
+                <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&h=50&q=80"
+                     alt="Logo" class="header-logo"
                      onerror="this.style.backgroundColor='#ddd'; console.error('Logo image failed to load')">
             </a>
             <div class="header-title">Kabarro</div> <!-- Updated Title -->
@@ -264,6 +266,7 @@
                 <i class="fas fa-bell"></i>
                  <!-- Notification badge (hidden by default, no static count) -->
                 <span class="badge notification-badge" id="notificationCountBadge"></span>
+                 <!-- Note: Actual notification fetching/display logic is not included in this version -->
             </div>
              <!-- Cart Icon -->
              <div class="header-icon cart-icon-container" id="cartIconContainer">
@@ -285,7 +288,6 @@
 
         <!-- Categories -->
         <div class="categories">
-            <!-- Categories remain the same -->
             <div class="category active" data-category="all">All</div>
             <div class="category" data-category="Groceries">Groceries</div>
             <div class="category" data-category="Meat">Meat</div>
@@ -305,9 +307,7 @@
             <div class="loading" id="loadingIndicator">
                 <div class="loading-spinner"></div>
             </div>
-            <div class="error-message" id="errorMessage" style="display: none;">
-                <!-- Error message text will be set dynamically -->
-            </div>
+            <div class="error-message" id="errorMessage" style="display: none;"></div>
             <div class="products-grid" id="productsGrid" style="display: none;"></div>
             <div class="empty-state" id="emptyState" style="display: none;">
                 <i class="fas fa-shopping-basket"></i>
@@ -340,14 +340,14 @@
         const categories = document.querySelectorAll('.category');
         const cartIconContainer = document.getElementById('cartIconContainer');
         const cartItemCountBadge = document.getElementById('cartItemCountBadge');
-        // Note: Notification elements are present but not actively used in this script beyond hiding the badge
+        const notificationCountBadge = document.getElementById('notificationCountBadge'); // Reference to notification badge
 
         // --- Initialize Firebase and Auth ---
         function initializeFirebaseAndApp() {
             try {
                 if (!firebase.apps.length) {
-                    firebase.initializeApp(firebaseConfig);
-                    console.log("Firebase initialized successfully.");
+                    firebase.initializeApp(firebaseConfig); // Using USER-PROVIDED config
+                    console.log("Firebase initialized successfully with provided config.");
                 } else {
                      firebase.app();
                      console.log("Firebase already initialized.");
@@ -360,73 +360,66 @@
                 auth.onAuthStateChanged(user => {
                     if (user) {
                         console.log("Auth State Changed: User is signed in. UID:", user.uid, "Anonymous:", user.isAnonymous);
-                        // Fetch products if not already fetched and no error shown
                         if (allProducts.length === 0 && errorMessage.style.display === 'none') {
                             initializeProductFetching();
                         } else {
-                            // Handle cases where user is already logged in and data might exist
-                            hideLoading(); // Ensure loading is hidden
-                            if (productsGrid.children.length > 0) {
-                                productsGrid.style.display = 'grid';
-                            } else if (errorMessage.style.display === 'none') {
-                                showEmptyState(); // Show empty if no products rendered
-                            }
+                            hideLoading();
+                            if (productsGrid.children.length > 0) { productsGrid.style.display = 'grid'; }
+                            else if (errorMessage.style.display === 'none') { showEmptyState(); }
                         }
-                        // **TODO**: Load actual cart count from Firestore/Storage if implementing persistent cart
-                        updateCartBadge(); // Update cart badge on auth state change (will show 0 initially)
+                        // ** Placeholder: Load actual cart data here if persistent **
+                        updateCartBadge(); // Initialize badge (shows 0 if cartItemCount is 0)
                     } else {
                         console.log("Auth State Changed: No user signed in. Attempting anonymous sign-in...");
-                        allProducts = []; productsGrid.innerHTML = ''; listenersInitialized = false; cartItemCount = 0; // Reset cart count on logout
-                        updateCartBadge(); // Hide cart badge
+                        allProducts = []; productsGrid.innerHTML = ''; listenersInitialized = false; cartItemCount = 0;
+                        updateCartBadge(); // Hide cart badge on logout
                         signInAnonymously();
                     }
                 });
 
             } catch (error) {
                 console.error("CRITICAL: Firebase initialization failed:", error);
-                showError("Application setup failed. Please check configuration and console.");
+                showError("Application setup failed. Check console.");
             }
         }
 
         // --- Anonymous Sign-In ---
-        function signInAnonymously() { /* ... Same as before ... */
+        function signInAnonymously() {
             showLoading();
             auth.signInAnonymously()
-                .then(() => { console.log("Anonymous sign-in successful. Waiting for auth state change callback..."); })
-                .catch((error) => { console.error("--- ANONYMOUS SIGN-IN FAILED ---", error); showError(`Authentication failed: ${error.message}. Check console and Firebase settings. (Code: ${error.code})`); });
+                .then(() => { console.log("Anonymous sign-in successful."); })
+                .catch((error) => { console.error("--- ANONYMOUS SIGN-IN FAILED ---", error); showError(`Authentication failed: ${error.message}. (Code: ${error.code})`); });
         }
 
         // --- Product Fetching ---
-        async function initializeProductFetching() { /* ... Same as before ... */
-            if (!auth.currentUser) { console.warn("Attempted to fetch products before user was authenticated."); showLoading(); return; }
-            console.log("Fetching products for user:", auth.currentUser.uid); showLoading();
+        async function initializeProductFetching() {
+            if (!auth.currentUser) { console.warn("Attempted to fetch before auth."); showLoading(); return; }
+            console.log("Fetching products..."); showLoading();
             allProducts = await fetchProducts();
              if (errorMessage.style.display !== 'block') { renderProducts(allProducts); setupEventListeners(); }
-             else { hideLoading(); console.log("Skipping rendering and listeners due to fetch error."); }
+             else { hideLoading(); console.log("Skipping render due to fetch error."); }
         }
 
         // --- Fetch Products from Firestore ---
-        async function fetchProducts() { /* ... Same as before ... */
-            if (!productsCollectionRef) { console.error("Firestore collection reference is not available."); showError("Database connection error."); return []; }
-            console.log(`Querying Firestore collection: ${productsCollectionRef.path}`);
+        async function fetchProducts() {
+            if (!productsCollectionRef) { showError("Database connection error."); return []; }
+            console.log(`Querying Firestore: ${productsCollectionRef.path}`);
             try {
                 const snapshot = await productsCollectionRef.where("Status", "==", "active").get(); const productsArray = [];
-                if (snapshot.empty) { console.log("No active products found in the Firestore collection."); }
-                else { snapshot.forEach(doc => { productsArray.push({ id: doc.id, ...doc.data() }); }); console.log(`Fetched ${productsArray.length} active products.`); }
+                if (snapshot.empty) { console.log("No active products found."); }
+                else { snapshot.forEach(doc => { productsArray.push({ id: doc.id, ...doc.data() }); }); console.log(`Fetched ${productsArray.length} products.`); }
                 return productsArray;
-            } catch (error) { console.error("Error fetching products from Firestore:", error); if (error.code === 'permission-denied') { showError(`Firestore permission denied. Check Rules.`); console.error("Firestore Rules might be blocking read access."); } else { showError(`Failed to load products: ${error.message}.`); } return []; }
+            } catch (error) { console.error("Error fetching products:", error); if (error.code === 'permission-denied') { showError(`Firestore permission denied.`); } else { showError(`Failed to load products.`); } return []; }
         }
 
 
         // --- Setup Event Listeners ---
         function setupEventListeners() {
-            if (listenersInitialized) { console.log("Listeners already initialized."); return; }
+            if (listenersInitialized) { return; } // Prevent adding multiple listeners
             console.log("Setting up event listeners...");
 
-            // Search Input
             searchInput.addEventListener('input', debouncedApplyFilters);
 
-            // Category Clicks
             categories.forEach(category => {
                 category.addEventListener('click', () => {
                     if (category.classList.contains('active')) return;
@@ -437,75 +430,69 @@
                 });
             });
 
-            // Add to Cart Clicks (on the grid)
+            // Add to Cart Clicks
             productsGrid.addEventListener('click', (event) => {
                  if (event.target.classList.contains('add-to-cart')) {
                      const button = event.target;
                      const productId = button.dataset.productId;
                      if (!productId) { console.error("Add to Cart button missing product ID."); return; }
-
-                     handleAddToCart(productId, button); // Call specific handler
+                     handleAddToCart(productId, button);
                  }
              });
 
              // Cart Icon Click for Navigation
             cartIconContainer.addEventListener('click', () => {
                 console.log("Cart icon clicked, navigating to cart.html");
-                window.location.href = 'cart.html';
+                window.location.href = 'cart.html'; // Navigate to cart page
             });
 
             listenersInitialized = true;
             console.log("Event listeners setup complete.");
-             updateCartBadge(); // Ensure badge is correct after listeners are added
+            updateCartBadge(); // Update badge once listeners are ready
         }
 
         // --- Add to Cart Handler ---
         function handleAddToCart(productId, buttonElement) {
-            console.log(`Add to cart clicked for product ID: ${productId}`);
-
-            // --- Simple In-Memory Cart Logic ---
-            cartItemCount++; // Increment the counter
-            updateCartBadge(); // Update the visual badge
-            console.log("Cart count:", cartItemCount);
-            // ** IMPORTANT NOTE: This is a simulation. For a real cart, you would:
-            // 1. Get the current user's ID (auth.currentUser.uid).
-            // 2. Find or create the user's cart document in Firestore (e.g., in a 'carts' collection).
-            // 3. Add/update the product quantity within that Firestore document.
-            // 4. Update the cart badge based on the *actual* data from Firestore (potentially using a listener).
-            // --- End Note ---
+            console.log(`Adding product ID to cart (simulated): ${productId}`);
+            cartItemCount++; // Increment in-memory counter
+            updateCartBadge(); // Update the visual badge in header
 
             // --- Visual Feedback for Button ---
             buttonElement.textContent = 'Adding...';
             buttonElement.disabled = true;
             setTimeout(() => {
                  buttonElement.textContent = 'Added!';
-                 // Briefly show "Added!" then revert
                  setTimeout(() => {
                     buttonElement.textContent = 'Add to Cart';
                     buttonElement.disabled = false;
                  }, 1000); // Show "Added!" for 1 second
-            }, 300); // Simulate adding delay
+            }, 300);
+            // **Note:** For a real cart, save `cartItemCount` or cart details to Firestore/localStorage here.
         }
 
         // --- Update Cart Badge UI ---
         function updateCartBadge() {
-            if (!cartItemCountBadge) return; // Exit if element not found
+            if (!cartItemCountBadge) return; // Safety check
 
             if (cartItemCount > 0) {
                 cartItemCountBadge.textContent = cartItemCount > 9 ? '9+' : cartItemCount.toString();
-                cartItemCountBadge.classList.add('visible'); // Use class to show
+                cartItemCountBadge.classList.add('visible'); // Show badge
             } else {
-                cartItemCountBadge.textContent = '0'; // Reset text content
-                cartItemCountBadge.classList.remove('visible'); // Use class to hide
+                cartItemCountBadge.textContent = '0'; // Reset text
+                cartItemCountBadge.classList.remove('visible'); // Hide badge
             }
+             // Ensure notification badge remains hidden (as no mock data)
+             if (notificationCountBadge) {
+                 notificationCountBadge.classList.remove('visible');
+             }
         }
 
 
         // --- Render Products ---
-        function renderProducts(products) { /* ... Same as before, ensure button has data-product-id ... */
+        function renderProducts(products) {
             productsGrid.innerHTML = '';
-            if (!Array.isArray(products)) { console.error("RenderProducts received non-array:", products); showEmptyState("Error", "Invalid product data."); return; }
-            if (products.length === 0) { const searchTerm = searchInput.value.trim(); if (currentCategory === 'all' && !searchTerm) { showEmptyState("No Products Available", "Store is currently empty."); } else { showEmptyState("No Products Found", "No products match filter/search."); } return; }
+            if (!Array.isArray(products)) { console.error("RenderProducts invalid data:", products); showEmptyState("Error", "Invalid product data."); return; }
+            if (products.length === 0) { const searchTerm = searchInput.value.trim(); if (currentCategory === 'all' && !searchTerm) { showEmptyState("No Products Available"); } else { showEmptyState("No Products Found", "No products match."); } return; }
             console.log(`Rendering ${products.length} products...`);
             products.sort((a, b) => (a.Title || a.name || '').localeCompare(b.Title || b.name || ''));
             const fragment = document.createDocumentFragment();
@@ -515,11 +502,7 @@
                 const productCard = document.createElement('div'); productCard.className = 'product-card';
                 productCard.innerHTML = `
                     <div class="product-image"> <img src="${imageSrc}" alt="${title}" loading="lazy" onerror="this.onerror=null; this.src='assets/images/placeholder.svg'; console.warn('Image failed:', this.src)"> ${discountPercentage ? `<div class="discount-badge">-${discountPercentage}%</div>` : ''} </div>
-                    <div class="product-details">
-                        <div class="product-title">${title}</div> <div class="product-vendor">${vendor}</div>
-                        <div class="product-price"> <div class="current-price">${currentPriceFormatted}</div> ${originalPriceFormatted && discountPercentage ? `<div class="original-price">${originalPriceFormatted}</div>` : ''} </div>
-                        <div class="product-tags"> ${tags.slice(0, 2).map(tag => `<div class="product-tag">${tag}</div>`).join('')} </div>
-                        <button class="add-to-cart" data-product-id="${product.id || ''}">Add to Cart</button>  </div>`; // Ensure product.id exists
+                    <div class="product-details"> <div class="product-title">${title}</div> <div class="product-vendor">${vendor}</div> <div class="product-price"> <div class="current-price">${currentPriceFormatted}</div> ${originalPriceFormatted && discountPercentage ? `<div class="original-price">${originalPriceFormatted}</div>` : ''} </div> <div class="product-tags"> ${tags.slice(0, 2).map(tag => `<div class="product-tag">${tag}</div>`).join('')} </div> <button class="add-to-cart" data-product-id="${product.id || ''}">Add to Cart</button> </div>`;
                 fragment.appendChild(productCard);
             });
             productsGrid.appendChild(fragment);
@@ -528,19 +511,16 @@
         }
 
         // --- Helper & Utility Functions ---
-        function formatPrice(price) { /* ... Same as before ... */ if (price === null || price === undefined || price === '') return ''; const number = parseFloat(price); if (isNaN(number)) return ''; return `₱${number.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`; }
-        function calculateDiscountPercentage(currentPrice, originalPrice) { /* ... Same as before ... */ const current = parseFloat(currentPrice); const original = parseFloat(originalPrice); if (isNaN(current) || isNaN(original) || original <= 0 || original <= current) return null; const discount = Math.round(((original - current) / original) * 100); return discount > 0 ? discount : null; }
-        function filterProductsByCategory(products, category) { /* ... Same as before ... */ if (category === 'all') return products; const lowerCaseCategory = category.toLowerCase(); return products.filter(product => { const type = (product.Type ?? product.category ?? '').toLowerCase(); const productCategory = (product['Product Category'] ?? '').toLowerCase(); let tagsMatch = false; if (Array.isArray(product.Tags)) { tagsMatch = product.Tags.some(tag => tag.toLowerCase().includes(lowerCaseCategory)); } else if (typeof product.Tags === 'string') { tagsMatch = product.Tags.toLowerCase().includes(lowerCaseCategory); } return type.includes(lowerCaseCategory) || productCategory.includes(lowerCaseCategory) || tagsMatch; }); }
-        function filterProductsBySearch(products, searchTerm) { /* ... Same as before ... */ if (!searchTerm) return products; const lowerCaseSearchTerm = searchTerm.toLowerCase(); return products.filter(product => { const title = (product.Title ?? product.name ?? '').toLowerCase(); const vendor = (product.Vendor ?? '').toLowerCase(); const description = (product['Body (HTML)'] ?? product.description ?? '').toLowerCase(); const type = (product.Type ?? product.category ?? '').toLowerCase(); let tagsMatch = false; if (Array.isArray(product.Tags)) { tagsMatch = product.Tags.some(tag => tag.toLowerCase().includes(lowerCaseSearchTerm)); } else if (typeof product.Tags === 'string') { tagsMatch = product.Tags.toLowerCase().includes(lowerCaseSearchTerm); } return title.includes(lowerCaseSearchTerm) || vendor.includes(lowerCaseSearchTerm) || description.includes(lowerCaseSearchTerm) || type.includes(lowerCaseSearchTerm) || tagsMatch; }); }
-        function showLoading() { /* ... Same as before ... */ loadingIndicator.style.display = 'flex'; productsGrid.style.display = 'none'; errorMessage.style.display = 'none'; emptyState.style.display = 'none'; }
-        function hideLoading() { /* ... Same as before ... */ loadingIndicator.style.display = 'none'; }
-        function showError(message = "An error occurred.") { /* ... Same as before ... */ hideLoading(); errorMessage.textContent = message; errorMessage.style.display = 'block'; productsGrid.style.display = 'none'; emptyState.style.display = 'none'; console.error("Error displayed:", message); }
-        function showEmptyState(message = "No Products Found", subMessage = "There are currently no products matching your search or filter.") { /* ... Same as before ... */ hideLoading(); emptyState.querySelector('h3').textContent = message; emptyState.querySelector('p').textContent = subMessage; emptyState.style.display = 'flex'; productsGrid.style.display = 'none'; errorMessage.style.display = 'none'; }
-        let searchTimeout; function debouncedApplyFilters() { /* ... Same as before ... */ clearTimeout(searchTimeout); searchTimeout = setTimeout(applyFilters, 300); }
-        function applyFilters() { /* ... Same as before ... */ const searchTerm = searchInput.value.trim(); console.log(`Applying filters - Category: '${currentCategory}', Search: '${searchTerm}'`); showLoading(); setTimeout(() => { let filtered = filterProductsByCategory(allProducts, currentCategory); filtered = filterProductsBySearch(filtered, searchTerm); renderProducts(filtered); }, 10); }
-
-        // --- Initial Call ---
-        // initializeFirebaseAndApp(); // Called by DOMContentLoaded event listener
+        function formatPrice(price) { if (price === null || price === undefined || price === '') return ''; const number = parseFloat(price); if (isNaN(number)) return ''; return `₱${number.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`; }
+        function calculateDiscountPercentage(currentPrice, originalPrice) { const current = parseFloat(currentPrice); const original = parseFloat(originalPrice); if (isNaN(current) || isNaN(original) || original <= 0 || original <= current) return null; const discount = Math.round(((original - current) / original) * 100); return discount > 0 ? discount : null; }
+        function filterProductsByCategory(products, category) { if (category === 'all') return products; const lowerCaseCategory = category.toLowerCase(); return products.filter(product => { const type = (product.Type ?? product.category ?? '').toLowerCase(); const productCategory = (product['Product Category'] ?? '').toLowerCase(); let tagsMatch = false; if (Array.isArray(product.Tags)) { tagsMatch = product.Tags.some(tag => tag.toLowerCase().includes(lowerCaseCategory)); } else if (typeof product.Tags === 'string') { tagsMatch = product.Tags.toLowerCase().includes(lowerCaseCategory); } return type.includes(lowerCaseCategory) || productCategory.includes(lowerCaseCategory) || tagsMatch; }); }
+        function filterProductsBySearch(products, searchTerm) { if (!searchTerm) return products; const lowerCaseSearchTerm = searchTerm.toLowerCase(); return products.filter(product => { const title = (product.Title ?? product.name ?? '').toLowerCase(); const vendor = (product.Vendor ?? '').toLowerCase(); const description = (product['Body (HTML)'] ?? product.description ?? '').toLowerCase(); const type = (product.Type ?? product.category ?? '').toLowerCase(); let tagsMatch = false; if (Array.isArray(product.Tags)) { tagsMatch = product.Tags.some(tag => tag.toLowerCase().includes(lowerCaseSearchTerm)); } else if (typeof product.Tags === 'string') { tagsMatch = product.Tags.toLowerCase().includes(lowerCaseSearchTerm); } return title.includes(lowerCaseSearchTerm) || vendor.includes(lowerCaseSearchTerm) || description.includes(lowerCaseSearchTerm) || type.includes(lowerCaseSearchTerm) || tagsMatch; }); }
+        function showLoading() { loadingIndicator.style.display = 'flex'; productsGrid.style.display = 'none'; errorMessage.style.display = 'none'; emptyState.style.display = 'none'; }
+        function hideLoading() { loadingIndicator.style.display = 'none'; }
+        function showError(message = "An error occurred.") { hideLoading(); errorMessage.textContent = message; errorMessage.style.display = 'block'; productsGrid.style.display = 'none'; emptyState.style.display = 'none'; console.error("Error displayed:", message); }
+        function showEmptyState(message = "No Products Found", subMessage = "There are currently no products matching.") { hideLoading(); emptyState.querySelector('h3').textContent = message; emptyState.querySelector('p').textContent = subMessage; emptyState.style.display = 'flex'; productsGrid.style.display = 'none'; errorMessage.style.display = 'none'; }
+        let searchTimeout; function debouncedApplyFilters() { clearTimeout(searchTimeout); searchTimeout = setTimeout(applyFilters, 300); }
+        function applyFilters() { const searchTerm = searchInput.value.trim(); console.log(`Applying filters - Cat: '${currentCategory}', Search: '${searchTerm}'`); showLoading(); setTimeout(() => { let filtered = filterProductsByCategory(allProducts, currentCategory); filtered = filterProductsBySearch(filtered, searchTerm); renderProducts(filtered); }, 10); }
 
     </script>
 </body>
