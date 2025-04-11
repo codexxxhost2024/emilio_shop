@@ -13,29 +13,30 @@
             --badge-color: #ff5252; /* Color for badges */
         }
 
+        /* --- Base Styles --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: Helvetica, Arial, sans-serif;
-            touch-action: manipulation;
+            touch-action: manipulation; /* Prevent double-tap zoom */
         }
-
         html, body {
-            overflow-x: hidden;
+            overflow-x: hidden; /* Prevent horizontal scroll */
             max-width: 100%;
-            touch-action: pan-y;
+            touch-action: pan-y; /* Allow vertical scroll/pan */
             background-color: #f8f9fa;
             color: #333;
         }
 
+        /* --- Layout Containers --- */
         .container {
             max-width: 100%;
             padding-top: 70px; /* Space for fixed header */
-            padding-bottom: 90px; /* Extra space at bottom for FAB visibility */
+            padding-bottom: 90px; /* Space for FAB */
         }
 
-        /* Header Styles */
+        /* --- Header Styles --- */
         .header {
             display: flex;
             justify-content: space-between;
@@ -51,169 +52,96 @@
             z-index: 100;
             height: 65px;
         }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-        }
-
-        /* Back Button / Logo Container Style */
-        .back-btn {
+        .header-left { display: flex; align-items: center; }
+        .back-btn { /* Logo container */
             background: none; border: none; margin-right: 15px; color: var(--primary-color);
             cursor: pointer; padding: 0; text-decoration: none; display: flex;
             align-items: center; justify-content: center; width: 50px; height: 50px;
         }
-
         .header-logo {
             width: 50px; height: 50px; border-radius: 50%; /* Circle */
             object-fit: cover; display: block; background-color: #eee; /* Fallback bg */
         }
-
         .back-btn:hover { opacity: 0.8; }
-
-        .header-title {
-            font-size: 18px; font-weight: 600; color: #212b36;
-        }
-
-        .header-right {
-            display: flex; align-items: center; gap: 25px; /* Increased gap slightly */
-        }
-
+        .header-title { font-size: 18px; font-weight: 600; color: #212b36; }
+        .header-right { display: flex; align-items: center; gap: 25px; }
         .header-icon {
-             position: relative; /* Needed for badge positioning */
-             font-size: 22px; color: #333; cursor: pointer;
-             padding: 5px; /* Add padding for easier tapping */
-             transition: transform 0.2s ease-in-out; /* Animation */
+             position: relative; font-size: 22px; color: #333; cursor: pointer;
+             padding: 5px; transition: transform 0.2s ease-in-out;
         }
-        /* Cart icon specific color */
         .header-icon .fa-shopping-cart { color: var(--primary-color); }
+        .header-icon.cart-icon-container:hover { transform: scale(1.1); }
+        .header-icon.cart-icon-container:active { transform: scale(1.05); }
 
-        /* Cart icon hover/active animation */
-        .header-icon.cart-icon-container:hover {
-            transform: scale(1.1);
-        }
-         .header-icon.cart-icon-container:active {
-             transform: scale(1.05);
-         }
-
-
-        /* --- Badge Styling (Common for Notification & Cart) --- */
+        /* --- Badge Styling --- */
         .badge {
-            position: absolute;
-            top: -3px; /* Adjusted position slightly */
-            right: -3px; /* Adjusted position slightly */
-            background-color: var(--badge-color);
-            color: white;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            display: flex; /* Use flex to center content */
-            justify-content: center;
-            align-items: center;
-            font-size: 10px;
-            font-weight: bold;
-            line-height: 1; /* Ensure text fits vertically */
-            border: 1px solid white; /* Optional border */
-            pointer-events: none; /* Prevent badge from interfering with clicks */
+            position: absolute; top: -3px; right: -3px; background-color: var(--badge-color);
+            color: white; border-radius: 50%; width: 18px; height: 18px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 10px; font-weight: bold; line-height: 1; border: 1px solid white;
+            pointer-events: none;
         }
-        /* Hide badges by default */
-        .notification-badge, .cart-badge {
-            display: none;
-        }
-        /* Show badge if it has content (will be controlled by JS) */
-        .badge.visible {
-            display: flex;
-        }
-        /* --- End Badge Styling --- */
+        .notification-badge, .cart-badge { display: none; } /* Hide by default */
+        .badge.visible { display: flex; } /* Show when class is added */
 
-
-        /* Search Bar */
-        .search-container {
-            padding: 15px; background-color: #fff; margin-bottom: 10px;
-        }
-        .search-bar {
-            display: flex; align-items: center; background-color: #f1f3f4; border-radius: 25px; padding: 8px 15px;
-        }
+        /* --- Search Bar --- */
+        .search-container { padding: 15px; background-color: #fff; margin-bottom: 10px; }
+        .search-bar { display: flex; align-items: center; background-color: #f1f3f4; border-radius: 25px; padding: 8px 15px; }
         .search-bar i { color: #5f6368; margin-right: 10px; }
         .search-bar input { flex: 1; border: none; background: transparent; outline: none; font-size: 14px; }
         .search-bar input:focus { box-shadow: 0 0 0 1px var(--primary-color); }
 
-        /* Categories */
-        .categories {
-            display: flex; overflow-x: auto; padding: 10px 15px; background-color: #fff; margin-bottom: 15px; scrollbar-width: none;
-        }
+        /* --- Categories --- */
+        .categories { display: flex; overflow-x: auto; padding: 10px 15px; background-color: #fff; margin-bottom: 15px; scrollbar-width: none; }
         .categories::-webkit-scrollbar { display: none; }
-        .category {
-            flex: 0 0 auto; padding: 8px 15px; margin-right: 10px; background-color: #f1f3f4; border-radius: 20px; font-size: 13px; white-space: nowrap; cursor: pointer; transition: background-color 0.3s, color 0.3s; border: 1px solid transparent;
-        }
+        .category { flex: 0 0 auto; padding: 8px 15px; margin-right: 10px; background-color: #f1f3f4; border-radius: 20px; font-size: 13px; white-space: nowrap; cursor: pointer; transition: background-color 0.3s, color 0.3s; border: 1px solid transparent; }
         .category.active { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
 
-        /* Products Grid & Card */
+        /* --- Products Grid & Cards --- */
         .products-container { padding: 10px; }
-        .products-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 5px; align-items: stretch;
-        }
+        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 5px; align-items: stretch; }
         .product-card {
-            background-color: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; height: 100%;
+            background-color: #fff; border-radius: 10px; overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s, box-shadow 0.3s;
+            display: flex; flex-direction: column; height: 100%; cursor: pointer; /* Make card clickable */
         }
-        .product-card:active { transform: scale(0.98); }
-        .product-image {
-            width: 100%; height: 150px; overflow: hidden; position: relative; background-color: #eee; flex-shrink: 0;
-        }
+        .product-card:active { transform: scale(0.98); } /* Keep active effect */
+        .product-image { width: 100%; height: 150px; overflow: hidden; position: relative; background-color: #eee; flex-shrink: 0; pointer-events: none; /* Prevent image stealing click */ }
         .product-image img { width: 100%; height: 100%; object-fit: cover; }
-        .discount-badge {
-            position: absolute; top: 10px; right: 10px; background-color: var(--badge-color); color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;
-        }
-        .product-details {
-            padding: 12px; display: flex; flex-direction: column; flex-grow: 1;
-        }
-        .product-title {
-            font-size: 14px; font-weight: 600; margin-bottom: 5px; color: #333; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 42px; line-height: 1.5;
-        }
-        .product-vendor {
-            font-size: 12px; color: #666; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        }
-        .product-price {
-            display: flex; align-items: center; margin-bottom: 8px;
-        }
+        .discount-badge { position: absolute; top: 10px; right: 10px; background-color: var(--badge-color); color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; pointer-events: none; }
+        .product-details { padding: 12px; display: flex; flex-direction: column; flex-grow: 1; pointer-events: none; /* Prevent details stealing click */ }
+        .product-title { font-size: 14px; font-weight: 600; margin-bottom: 5px; color: #333; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 42px; line-height: 1.5; }
+        .product-vendor { font-size: 12px; color: #666; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .product-price { display: flex; align-items: center; margin-bottom: 8px; }
         .current-price { font-size: 16px; font-weight: 700; color: #333; }
         .original-price { font-size: 12px; color: #999; text-decoration: line-through; margin-left: 8px; }
-        .product-tags {
-            display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; height: 22px; overflow: hidden; margin-bottom: 10px;
-        }
+        .product-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; height: 22px; overflow: hidden; margin-bottom: 10px; }
         .product-tag { background-color: #f1f3f4; padding: 2px 8px; border-radius: 10px; font-size: 10px; color: #666; }
         .add-to-cart {
-            background-color: var(--primary-color); color: white; border: none; border-radius: 5px; padding: 8px 0; width: 100%; font-size: 13px; font-weight: 500; cursor: pointer; transition: background-color 0.3s; margin-top: auto;
+            background-color: var(--primary-color); color: white; border: none; border-radius: 5px;
+            padding: 8px 0; width: 100%; font-size: 13px; font-weight: 500; cursor: pointer;
+            transition: background-color 0.3s; margin-top: auto;
+            pointer-events: auto; /* Ensure button itself is clickable */
+            z-index: 5; /* Place above other card elements if needed */
         }
         .add-to-cart:active, .add-to-cart:hover { background-color: var(--primary-color-darker); }
 
-        /* Loading, Error, Empty States */
-        .loading {
-            display: flex; justify-content: center; align-items: center; height: 200px; width: 100%;
-        }
-        .loading-spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1); border-radius: 50%; border-top: 4px solid var(--primary-color); width: 40px; height: 40px; animation: spin 1s linear infinite;
-        }
+        /* --- Loading, Error, Empty States --- */
+        .loading { display: flex; justify-content: center; align-items: center; height: 200px; width: 100%; }
+        .loading-spinner { border: 4px solid rgba(0, 0, 0, 0.1); border-radius: 50%; border-top: 4px solid var(--primary-color); width: 40px; height: 40px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .error-message {
-            text-align: center; padding: 20px; color: var(--badge-color); font-weight: bold;
-        }
-        .empty-state {
-            display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; text-align: center; min-height: 200px;
-        }
+        .error-message { text-align: center; padding: 20px; color: var(--badge-color); font-weight: bold; }
+        .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; text-align: center; min-height: 200px; }
         .empty-state i { font-size: 50px; color: #ccc; margin-bottom: 15px; }
         .empty-state h3 { font-size: 18px; color: #333; margin-bottom: 10px; }
         .empty-state p { font-size: 14px; color: #666; margin-bottom: 20px; }
 
-        /* FAB */
-        .fab {
-            position: fixed; bottom: 35px; right: 20px; width: 55px; height: 55px; background-color: var(--primary-color); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; text-decoration: none; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); z-index: 999; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s;
-        }
+        /* --- Floating Action Button (FAB) --- */
+        .fab { position: fixed; bottom: 35px; right: 20px; width: 55px; height: 55px; background-color: var(--primary-color); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; text-decoration: none; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); z-index: 999; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s; }
         .fab:hover { background-color: var(--primary-color-darker); transform: scale(1.05); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3); }
-
     </style>
     <script>
-        // Firebase configuration (Using the specific config provided by user)
+        // --- Firebase Configuration (USER-PROVIDED) ---
         const firebaseConfig = {
           apiKey: "AIzaSyDwldURmtljNpORmpGRacwXriPmQZjF6j8",
           authDomain: "daisy-n7g20a.firebaseapp.com",
@@ -224,24 +152,17 @@
           appId: "1:225362605902:web:d6672119cd68e7ffc3d01f"
         };
 
-        // Prevent zoom scripts
+        // --- Prevent Zoom Scripts ---
         document.addEventListener('DOMContentLoaded', function() {
-            document.addEventListener('touchstart', function(event) {
-                if (event.touches.length > 1) { event.preventDefault(); }
-            }, { passive: false });
-            document.addEventListener('touchmove', function(event) {
-                if (event.touches.length > 1) { event.preventDefault(); }
-            }, { passive: false });
+            document.addEventListener('touchstart', function(event) { if (event.touches.length > 1) event.preventDefault(); }, { passive: false });
+            document.addEventListener('touchmove', function(event) { if (event.touches.length > 1) event.preventDefault(); }, { passive: false });
             let lastTouchEnd = 0;
-            document.addEventListener('touchend', function(event) {
-                const now = Date.now(); if (now - lastTouchEnd <= 300) { event.preventDefault(); } lastTouchEnd = now;
-            }, { passive: false });
-
-            // Initialize Firebase and Start Logic AFTER DOM is ready
+            document.addEventListener('touchend', function(event) { const now = Date.now(); if (now - lastTouchEnd <= 300) event.preventDefault(); lastTouchEnd = now; }, { passive: false });
+            // Initialize App after DOM ready
             initializeFirebaseAndApp();
         });
     </script>
-    <!-- Firebase SDK -->
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
@@ -252,84 +173,52 @@
     <div class="header">
         <div class="header-left">
             <a href="home.html" class="back-btn">
-                 <!-- **** Unsplash Placeholder Logo **** -->
-                 <!-- Using a direct link to a small, cropped Unsplash image -->
                 <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&h=50&q=80"
-                     alt="Logo" class="header-logo"
-                     onerror="this.style.backgroundColor='#ddd'; console.error('Logo image failed to load')">
+                     alt="Logo" class="header-logo" onerror="this.style.backgroundColor='#ddd'; console.error('Logo image failed to load')">
             </a>
-            <div class="header-title">Kabarro</div> <!-- Updated Title -->
+            <div class="header-title">Kabarro</div>
         </div>
         <div class="header-right">
-            <!-- Notification Icon -->
             <div class="notification header-icon">
                 <i class="fas fa-bell"></i>
-                 <!-- Notification badge (hidden by default, no static count) -->
                 <span class="badge notification-badge" id="notificationCountBadge"></span>
-                 <!-- Note: Actual notification fetching/display logic is not included in this version -->
+                <!-- Actual notification logic not included -->
             </div>
-             <!-- Cart Icon -->
-             <div class="header-icon cart-icon-container" id="cartIconContainer">
-                 <i class="fas fa-shopping-cart"></i>
-                 <!-- Cart Item Count Badge -->
-                 <span class="badge cart-badge" id="cartItemCountBadge">0</span>
-             </div>
+            <div class="header-icon cart-icon-container" id="cartIconContainer">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="badge cart-badge" id="cartItemCountBadge">0</span>
+            </div>
         </div>
     </div>
 
+    <!-- Main Container -->
     <div class="container">
         <!-- Search Bar -->
         <div class="search-container">
-            <div class="search-bar">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search products..." id="searchInput">
-            </div>
+            <div class="search-bar"> <i class="fas fa-search"></i> <input type="text" placeholder="Search products..." id="searchInput"> </div>
         </div>
-
         <!-- Categories -->
         <div class="categories">
-            <div class="category active" data-category="all">All</div>
-            <div class="category" data-category="Groceries">Groceries</div>
-            <div class="category" data-category="Meat">Meat</div>
-            <div class="category" data-category="Drinks">Drinks</div>
-            <div class="category" data-category="Snacks">Snacks</div>
-            <div class="category" data-category="Household">Household</div>
-            <div class="category" data-category="Personal Care">Personal Care</div>
-            <div class="category" data-category="Frozen">Frozen Foods</div>
-            <div class="category" data-category="Digital Products">Digital Products</div>
-            <div class="category" data-category="Electronics">Electronics</div>
-            <div class="category" data-category="Clothing">Clothing</div>
-            <div class="category" data-category="Bakery">Bakery</div>
+             <div class="category active" data-category="all">All</div> <div class="category" data-category="Groceries">Groceries</div> <div class="category" data-category="Meat">Meat</div> <div class="category" data-category="Drinks">Drinks</div> <div class="category" data-category="Snacks">Snacks</div> <div class="category" data-category="Household">Household</div> <div class="category" data-category="Personal Care">Personal Care</div> <div class="category" data-category="Frozen">Frozen Foods</div> <div class="category" data-category="Digital Products">Digital Products</div> <div class="category" data-category="Electronics">Electronics</div> <div class="category" data-category="Clothing">Clothing</div> <div class="category" data-category="Bakery">Bakery</div>
         </div>
-
         <!-- Products Grid Container -->
         <div class="products-container">
-            <div class="loading" id="loadingIndicator">
-                <div class="loading-spinner"></div>
-            </div>
+            <div class="loading" id="loadingIndicator"> <div class="loading-spinner"></div> </div>
             <div class="error-message" id="errorMessage" style="display: none;"></div>
             <div class="products-grid" id="productsGrid" style="display: none;"></div>
-            <div class="empty-state" id="emptyState" style="display: none;">
-                <i class="fas fa-shopping-basket"></i>
-                <h3>No Products Found</h3>
-                <p>There are currently no products matching your search or filter.</p>
-            </div>
+            <div class="empty-state" id="emptyState" style="display: none;"> <i class="fas fa-shopping-basket"></i> <h3>No Products Found</h3> <p>No products match.</p> </div>
         </div>
-
-    </div> <!-- End .container -->
-
+    </div>
     <!-- Floating Action Button -->
-    <a href="add-products.html" class="fab">
-        <i class="fas fa-plus"></i>
-    </a>
+    <a href="add-products.html" class="fab"> <i class="fas fa-plus"></i> </a>
 
     <script>
-        // --- Firebase Initialization and App Logic ---
-        let auth, db, productsCollectionRef;
-        let allProducts = [];
+        // --- Firebase and App State ---
+        let auth, db, productsCollectionRef, userCartCollectionRef;
+        let allProducts = []; // Cache for product data
         let currentCategory = 'all';
         let listenersInitialized = false;
-        let cartItemCount = 0; // Simple in-memory cart counter
+        let currentUser = null; // Store current user object
 
         // --- DOM Elements ---
         const productsGrid = document.getElementById('productsGrid');
@@ -340,169 +229,236 @@
         const categories = document.querySelectorAll('.category');
         const cartIconContainer = document.getElementById('cartIconContainer');
         const cartItemCountBadge = document.getElementById('cartItemCountBadge');
-        const notificationCountBadge = document.getElementById('notificationCountBadge'); // Reference to notification badge
+        const notificationCountBadge = document.getElementById('notificationCountBadge'); // Ref if needed later
 
-        // --- Initialize Firebase and Auth ---
+        // --- Initialize Firebase and App Logic ---
         function initializeFirebaseAndApp() {
             try {
                 if (!firebase.apps.length) {
-                    firebase.initializeApp(firebaseConfig); // Using USER-PROVIDED config
-                    console.log("Firebase initialized successfully with provided config.");
-                } else {
-                     firebase.app();
-                     console.log("Firebase already initialized.");
-                }
+                    firebase.initializeApp(firebaseConfig); console.log("Firebase initialized.");
+                } else { firebase.app(); console.log("Firebase already initialized."); }
                 auth = firebase.auth();
                 db = firebase.firestore();
                 productsCollectionRef = db.collection("kabarroph_products");
+                userCartCollectionRef = db.collection("user_carts"); // Firestore collection for cart items
 
-                // --- Handle Authentication State ---
+                // --- Authentication State Change Listener ---
                 auth.onAuthStateChanged(user => {
+                    currentUser = user; // Update current user state
                     if (user) {
-                        console.log("Auth State Changed: User is signed in. UID:", user.uid, "Anonymous:", user.isAnonymous);
+                        console.log("Auth State: User signed in.", user.uid, "Anonymous:", user.isAnonymous);
+                        // Fetch products if not already loaded and no error shown
                         if (allProducts.length === 0 && errorMessage.style.display === 'none') {
                             initializeProductFetching();
                         } else {
-                            hideLoading();
-                            if (productsGrid.children.length > 0) { productsGrid.style.display = 'grid'; }
-                            else if (errorMessage.style.display === 'none') { showEmptyState(); }
+                            hideLoading(); // Ensure loading is off
+                            if (productsGrid.children.length === 0 && errorMessage.style.display === 'none') showEmptyState();
                         }
-                        // ** Placeholder: Load actual cart data here if persistent **
-                        updateCartBadge(); // Initialize badge (shows 0 if cartItemCount is 0)
+                        updateCartBadge(); // Fetch and display cart count from Firestore
                     } else {
-                        console.log("Auth State Changed: No user signed in. Attempting anonymous sign-in...");
-                        allProducts = []; productsGrid.innerHTML = ''; listenersInitialized = false; cartItemCount = 0;
-                        updateCartBadge(); // Hide cart badge on logout
+                        console.log("Auth State: No user. Attempting anonymous sign-in...");
+                        allProducts = []; productsGrid.innerHTML = ''; listenersInitialized = false;
+                        updateCartBadge(0); // Reset badge visually to 0 on logout
                         signInAnonymously();
                     }
                 });
-
-            } catch (error) {
-                console.error("CRITICAL: Firebase initialization failed:", error);
-                showError("Application setup failed. Check console.");
-            }
+            } catch (error) { console.error("CRITICAL: Firebase init failed:", error); showError("App setup failed. Check console."); }
         }
 
         // --- Anonymous Sign-In ---
         function signInAnonymously() {
             showLoading();
             auth.signInAnonymously()
-                .then(() => { console.log("Anonymous sign-in successful."); })
-                .catch((error) => { console.error("--- ANONYMOUS SIGN-IN FAILED ---", error); showError(`Authentication failed: ${error.message}. (Code: ${error.code})`); });
+                .then(() => { console.log("Anonymous sign-in successful."); /* onAuthStateChanged will handle next steps */ })
+                .catch((error) => { console.error("--- ANONYMOUS SIGN-IN FAILED ---", error); showError(`Authentication failed: ${error.message}. Check Firebase Console. (Code: ${error.code})`); });
         }
 
-        // --- Product Fetching ---
+        // --- Product Fetching Orchestration ---
         async function initializeProductFetching() {
-            if (!auth.currentUser) { console.warn("Attempted to fetch before auth."); showLoading(); return; }
-            console.log("Fetching products..."); showLoading();
-            allProducts = await fetchProducts();
-             if (errorMessage.style.display !== 'block') { renderProducts(allProducts); setupEventListeners(); }
-             else { hideLoading(); console.log("Skipping render due to fetch error."); }
+             if (!currentUser) { console.warn("InitializeProductFetching called before user authenticated."); showLoading(); return; }
+             console.log("Fetching products..."); showLoading();
+             allProducts = await fetchProducts(); // Fetch and cache product data
+             if (errorMessage.style.display !== 'block') {
+                 renderProducts(allProducts);
+                 setupEventListeners();
+             } else {
+                 hideLoading();
+                 console.log("Skipping rendering due to fetch error.");
+             }
         }
 
-        // --- Fetch Products from Firestore ---
+        // --- Fetch Product Data from Firestore ---
         async function fetchProducts() {
             if (!productsCollectionRef) { showError("Database connection error."); return []; }
             console.log(`Querying Firestore: ${productsCollectionRef.path}`);
             try {
-                const snapshot = await productsCollectionRef.where("Status", "==", "active").get(); const productsArray = [];
+                const snapshot = await productsCollectionRef.where("Status", "==", "active").get();
+                const productsArray = [];
                 if (snapshot.empty) { console.log("No active products found."); }
-                else { snapshot.forEach(doc => { productsArray.push({ id: doc.id, ...doc.data() }); }); console.log(`Fetched ${productsArray.length} products.`); }
+                else { snapshot.forEach(doc => productsArray.push({ id: doc.id, ...doc.data() })); console.log(`Fetched ${productsArray.length} products.`); }
                 return productsArray;
             } catch (error) { console.error("Error fetching products:", error); if (error.code === 'permission-denied') { showError(`Firestore permission denied.`); } else { showError(`Failed to load products.`); } return []; }
         }
 
-
         // --- Setup Event Listeners ---
         function setupEventListeners() {
-            if (listenersInitialized) { return; } // Prevent adding multiple listeners
+            if (listenersInitialized) return;
             console.log("Setting up event listeners...");
 
             searchInput.addEventListener('input', debouncedApplyFilters);
+            categories.forEach(category => { category.addEventListener('click', handleCategoryClick); });
 
-            categories.forEach(category => {
-                category.addEventListener('click', () => {
-                    if (category.classList.contains('active')) return;
-                    categories.forEach(c => c.classList.remove('active'));
-                    category.classList.add('active');
-                    currentCategory = category.dataset.category;
-                    applyFilters();
-                });
-            });
+            // --- Grid Listener for Card Clicks and Add to Cart Button Clicks ---
+            productsGrid.addEventListener('click', handleGridClick);
 
-            // Add to Cart Clicks
-            productsGrid.addEventListener('click', (event) => {
-                 if (event.target.classList.contains('add-to-cart')) {
-                     const button = event.target;
-                     const productId = button.dataset.productId;
-                     if (!productId) { console.error("Add to Cart button missing product ID."); return; }
-                     handleAddToCart(productId, button);
-                 }
-             });
-
-             // Cart Icon Click for Navigation
-            cartIconContainer.addEventListener('click', () => {
-                console.log("Cart icon clicked, navigating to cart.html");
-                window.location.href = 'cart.html'; // Navigate to cart page
-            });
+            // --- Cart Icon Click Listener ---
+            cartIconContainer.addEventListener('click', handleCartIconClick);
 
             listenersInitialized = true;
             console.log("Event listeners setup complete.");
-            updateCartBadge(); // Update badge once listeners are ready
+            updateCartBadge(); // Ensure badge reflects current state
         }
 
-        // --- Add to Cart Handler ---
-        function handleAddToCart(productId, buttonElement) {
-            console.log(`Adding product ID to cart (simulated): ${productId}`);
-            cartItemCount++; // Increment in-memory counter
-            updateCartBadge(); // Update the visual badge in header
-
-            // --- Visual Feedback for Button ---
-            buttonElement.textContent = 'Adding...';
-            buttonElement.disabled = true;
-            setTimeout(() => {
-                 buttonElement.textContent = 'Added!';
-                 setTimeout(() => {
-                    buttonElement.textContent = 'Add to Cart';
-                    buttonElement.disabled = false;
-                 }, 1000); // Show "Added!" for 1 second
-            }, 300);
-            // **Note:** For a real cart, save `cartItemCount` or cart details to Firestore/localStorage here.
+        // --- Event Handler Functions ---
+        function handleCategoryClick(event) {
+            const categoryElement = event.target;
+            if (categoryElement.classList.contains('active')) return;
+            categories.forEach(c => c.classList.remove('active'));
+            categoryElement.classList.add('active');
+            currentCategory = categoryElement.dataset.category;
+            applyFilters();
         }
 
-        // --- Update Cart Badge UI ---
-        function updateCartBadge() {
-            if (!cartItemCountBadge) return; // Safety check
+        function handleGridClick(event) {
+            const card = event.target.closest('.product-card');
+            if (!card) return; // Clicked outside a card
 
-            if (cartItemCount > 0) {
-                cartItemCountBadge.textContent = cartItemCount > 9 ? '9+' : cartItemCount.toString();
-                cartItemCountBadge.classList.add('visible'); // Show badge
+            const productId = card.dataset.productId;
+            if (!productId) { console.error("Card missing product ID attribute."); return; }
+
+            // Check if the click was specifically on the 'Add to Cart' button
+            if (event.target.classList.contains('add-to-cart')) {
+                 event.stopPropagation(); // IMPORTANT: Stop the click from bubbling up to the card
+                 handleAddToCart(productId, event.target);
             } else {
-                cartItemCountBadge.textContent = '0'; // Reset text
-                cartItemCountBadge.classList.remove('visible'); // Hide badge
+                 // Click was on the card itself (but not the button)
+                 navigateToDetails(productId);
             }
-             // Ensure notification badge remains hidden (as no mock data)
-             if (notificationCountBadge) {
-                 notificationCountBadge.classList.remove('visible');
+        }
+
+        function handleCartIconClick() {
+            console.log("Cart icon clicked, navigating to cart.html");
+            window.location.href = 'cart.html'; // Navigate to cart page
+        }
+
+        function navigateToDetails(productId) {
+             console.log(`Product card clicked: ${productId}. Navigating to details...`);
+             window.location.href = `details.html?id=${encodeURIComponent(productId)}`; // Navigate to details page, passing ID
+        }
+
+        // --- Add to Cart Logic (Writes to Firestore) ---
+        async function handleAddToCart(productId, buttonElement) {
+            if (!currentUser) { showError("Authentication needed."); return; }
+            console.log(`Adding product ID to Firestore cart: ${productId}`);
+
+            const product = allProducts.find(p => p.id === productId); // Find product data from cache
+            if (!product) { console.error(`Product data not found locally for ID: ${productId}`); showError("Product details unavailable."); return; }
+
+            const cartItem = { // Data to save in Firestore cart item document
+                userId: currentUser.uid,
+                productId: productId,
+                quantity: 1, // Default quantity
+                addedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                productTitle: product.Title || product.name || 'Unnamed',
+                productPrice: product['Variant Price'] ?? product.price ?? 0,
+                productImage: product['Image Src'] || (Array.isArray(product.imageUrls) && product.imageUrls[0]) || ''
+            };
+
+            buttonElement.textContent = 'Adding...'; buttonElement.disabled = true; // Visual feedback
+
+            try {
+                // ** Firestore Write Operation **
+                // Check if item already exists? Or just add duplicates? For now, add duplicates.
+                // To check/update quantity, you'd need a query first.
+                const docRef = await userCartCollectionRef.add(cartItem);
+                console.log("Item added to Firestore cart with Doc ID:", docRef.id);
+
+                await updateCartBadge(); // Update badge from Firestore count
+
+                buttonElement.textContent = 'Added!';
+                setTimeout(() => { buttonElement.textContent = 'Add to Cart'; buttonElement.disabled = false; }, 1000);
+
+            } catch (error) {
+                console.error("Error adding item to Firestore cart:", error);
+                showError("Failed to add item. Check Firestore rules.");
+                buttonElement.textContent = 'Add to Cart'; buttonElement.disabled = false; // Revert button
+            }
+        }
+
+        // --- Update Cart Badge (Reads from Firestore) ---
+        async function updateCartBadge(forceCount = null) {
+            if (!cartItemCountBadge) return; // Element safety check
+
+            let count = 0;
+             if (forceCount !== null) { count = forceCount; } // Use forced count if provided (e.g., 0 on logout)
+             else if (currentUser && userCartCollectionRef) { // Check user and collection ref
+                 try {
+                     const snapshot = await userCartCollectionRef.where('userId', '==', currentUser.uid).get();
+                     count = snapshot.size; // Number of cart item documents for this user
+                     console.log(`Firestore cart count for user ${currentUser.uid}: ${count}`);
+                 } catch (error) {
+                     console.error("Error fetching cart count:", error);
+                     count = parseInt(cartItemCountBadge.textContent) || 0; // Fallback to current display on error
+                 }
              }
+
+            // Update badge UI
+            if (count > 0) {
+                cartItemCountBadge.textContent = count > 9 ? '9+' : count.toString();
+                cartItemCountBadge.classList.add('visible');
+            } else {
+                cartItemCountBadge.textContent = '0';
+                cartItemCountBadge.classList.remove('visible');
+            }
+            // Ensure notification badge remains hidden
+            if (notificationCountBadge) notificationCountBadge.classList.remove('visible');
         }
 
 
-        // --- Render Products ---
+        // --- Render Products (Add data-product-id to CARD) ---
         function renderProducts(products) {
             productsGrid.innerHTML = '';
-            if (!Array.isArray(products)) { console.error("RenderProducts invalid data:", products); showEmptyState("Error", "Invalid product data."); return; }
-            if (products.length === 0) { const searchTerm = searchInput.value.trim(); if (currentCategory === 'all' && !searchTerm) { showEmptyState("No Products Available"); } else { showEmptyState("No Products Found", "No products match."); } return; }
+            if (!Array.isArray(products)) { showError("Error", "Invalid product data."); return; }
+            if (products.length === 0) { showEmptyState(); return; }
             console.log(`Rendering ${products.length} products...`);
             products.sort((a, b) => (a.Title || a.name || '').localeCompare(b.Title || b.name || ''));
             const fragment = document.createDocumentFragment();
             products.forEach(product => {
-                const currentPrice = product['Variant Price'] ?? product.price ?? null; const comparePrice = product['Variant Compare At Price'] ?? product.compare_at_price ?? null; const imageSrc = product['Image Src'] ?? (Array.isArray(product.imageUrls) && product.imageUrls[0]) ?? 'assets/images/placeholder.svg'; const title = product.Title ?? product.name ?? 'Unnamed Product'; const vendor = product.Vendor ?? 'General Store'; let tags = product.Tags ?? []; if (typeof tags === 'string') { tags = tags.split(',').map(tag => tag.trim()).filter(tag => tag); } else if (!Array.isArray(tags)) { tags = []; }
+                if (!product.id) { console.warn("Product missing ID, skipping:", product); return; }
+                const currentPrice = product['Variant Price'] ?? product.price ?? null; const comparePrice = product['Variant Compare At Price'] ?? product.compare_at_price ?? null; const imageSrc = product['Image Src'] || (Array.isArray(product.imageUrls) && product.imageUrls[0]) || 'assets/images/placeholder.svg'; const title = product.Title ?? product.name ?? 'Unnamed Product'; const vendor = product.Vendor ?? 'General Store'; let tags = product.Tags ?? []; if (typeof tags === 'string') { tags = tags.split(',').map(tag => tag.trim()).filter(tag => tag); } else if (!Array.isArray(tags)) { tags = []; }
                 const discountPercentage = calculateDiscountPercentage(currentPrice, comparePrice); const currentPriceFormatted = formatPrice(currentPrice); const originalPriceFormatted = formatPrice(comparePrice);
-                const productCard = document.createElement('div'); productCard.className = 'product-card';
+
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.dataset.productId = product.id; // <<< SET ID ON THE CARD
+
                 productCard.innerHTML = `
-                    <div class="product-image"> <img src="${imageSrc}" alt="${title}" loading="lazy" onerror="this.onerror=null; this.src='assets/images/placeholder.svg'; console.warn('Image failed:', this.src)"> ${discountPercentage ? `<div class="discount-badge">-${discountPercentage}%</div>` : ''} </div>
-                    <div class="product-details"> <div class="product-title">${title}</div> <div class="product-vendor">${vendor}</div> <div class="product-price"> <div class="current-price">${currentPriceFormatted}</div> ${originalPriceFormatted && discountPercentage ? `<div class="original-price">${originalPriceFormatted}</div>` : ''} </div> <div class="product-tags"> ${tags.slice(0, 2).map(tag => `<div class="product-tag">${tag}</div>`).join('')} </div> <button class="add-to-cart" data-product-id="${product.id || ''}">Add to Cart</button> </div>`;
+                    <div class="product-image">
+                        <img src="${imageSrc}" alt="${title}" loading="lazy" onerror="this.onerror=null; this.src='assets/images/placeholder.svg'; console.warn('Image fail:', this.src)">
+                        ${discountPercentage ? `<div class="discount-badge">-${discountPercentage}%</div>` : ''}
+                    </div>
+                    <div class="product-details">
+                        <div class="product-title">${title}</div>
+                        <div class="product-vendor">${vendor}</div>
+                        <div class="product-price">
+                            <div class="current-price">${currentPriceFormatted}</div>
+                            ${originalPriceFormatted && discountPercentage ? `<div class="original-price">${originalPriceFormatted}</div>` : ''}
+                        </div>
+                        <div class="product-tags">
+                            ${tags.slice(0, 2).map(tag => `<div class="product-tag">${tag}</div>`).join('')}
+                        </div>
+                        <button class="add-to-cart" data-product-id="${product.id}">Add to Cart</button>
+                    </div>`;
                 fragment.appendChild(productCard);
             });
             productsGrid.appendChild(fragment);
@@ -510,7 +466,7 @@
             console.log("Rendering complete.");
         }
 
-        // --- Helper & Utility Functions ---
+        // --- Helper Functions (No changes needed in these) ---
         function formatPrice(price) { if (price === null || price === undefined || price === '') return ''; const number = parseFloat(price); if (isNaN(number)) return ''; return `₱${number.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`; }
         function calculateDiscountPercentage(currentPrice, originalPrice) { const current = parseFloat(currentPrice); const original = parseFloat(originalPrice); if (isNaN(current) || isNaN(original) || original <= 0 || original <= current) return null; const discount = Math.round(((original - current) / original) * 100); return discount > 0 ? discount : null; }
         function filterProductsByCategory(products, category) { if (category === 'all') return products; const lowerCaseCategory = category.toLowerCase(); return products.filter(product => { const type = (product.Type ?? product.category ?? '').toLowerCase(); const productCategory = (product['Product Category'] ?? '').toLowerCase(); let tagsMatch = false; if (Array.isArray(product.Tags)) { tagsMatch = product.Tags.some(tag => tag.toLowerCase().includes(lowerCaseCategory)); } else if (typeof product.Tags === 'string') { tagsMatch = product.Tags.toLowerCase().includes(lowerCaseCategory); } return type.includes(lowerCaseCategory) || productCategory.includes(lowerCaseCategory) || tagsMatch; }); }
@@ -518,7 +474,7 @@
         function showLoading() { loadingIndicator.style.display = 'flex'; productsGrid.style.display = 'none'; errorMessage.style.display = 'none'; emptyState.style.display = 'none'; }
         function hideLoading() { loadingIndicator.style.display = 'none'; }
         function showError(message = "An error occurred.") { hideLoading(); errorMessage.textContent = message; errorMessage.style.display = 'block'; productsGrid.style.display = 'none'; emptyState.style.display = 'none'; console.error("Error displayed:", message); }
-        function showEmptyState(message = "No Products Found", subMessage = "There are currently no products matching.") { hideLoading(); emptyState.querySelector('h3').textContent = message; emptyState.querySelector('p').textContent = subMessage; emptyState.style.display = 'flex'; productsGrid.style.display = 'none'; errorMessage.style.display = 'none'; }
+        function showEmptyState(message = "No Products Found", subMessage = "No products match.") { hideLoading(); emptyState.querySelector('h3').textContent = message; emptyState.querySelector('p').textContent = subMessage; emptyState.style.display = 'flex'; productsGrid.style.display = 'none'; errorMessage.style.display = 'none'; }
         let searchTimeout; function debouncedApplyFilters() { clearTimeout(searchTimeout); searchTimeout = setTimeout(applyFilters, 300); }
         function applyFilters() { const searchTerm = searchInput.value.trim(); console.log(`Applying filters - Cat: '${currentCategory}', Search: '${searchTerm}'`); showLoading(); setTimeout(() => { let filtered = filterProductsByCategory(allProducts, currentCategory); filtered = filterProductsBySearch(filtered, searchTerm); renderProducts(filtered); }, 10); }
 
